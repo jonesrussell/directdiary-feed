@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { router } from '@inertiajs/vue3';
+import { router, usePage } from '@inertiajs/vue3';
 import Twitter from 'vue-material-design-icons/Twitter.vue';
 import Magnify from 'vue-material-design-icons/Magnify.vue';
 import DotsHorizontal from 'vue-material-design-icons/DotsHorizontal.vue';
@@ -13,6 +13,9 @@ import FileGifBox from 'vue-material-design-icons/FileGifBox.vue';
 import Emoticon from 'vue-material-design-icons/Emoticon.vue';
 import ArrowLeft from 'vue-material-design-icons/ArrowLeft.vue';
 import MenuItem from '@/Components/MenuItem.vue'
+
+let { props } = usePage();
+let authUser = props.auth.user;
 
 let createTweet = ref(false)
 let tweet = ref('')
@@ -68,11 +71,11 @@ const textareaInput = (e) => {
                     <Twitter fillColor="#FFFFFF" :size="37" />
                 </div>
 
-                <MenuItem iconString="Home"/>
-                <MenuItem iconString="Explore"/>
-                <MenuItem iconString="Notifications"/>
-                <MenuItem iconString="Messages"/>
-                <MenuItem iconString="Profile"/>
+                <MenuItem iconString="Home" v-if="authUser"/>
+                <MenuItem iconString="Explore" v-else/>
+                <MenuItem iconString="Notifications" v-if="authUser"/>
+                <MenuItem iconString="Messages" v-if="authUser"/>
+                <MenuItem iconString="Profile" v-if="authUser"/>
 
                 <button
                     @click="createTweet = true"
