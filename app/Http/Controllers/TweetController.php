@@ -11,7 +11,7 @@ class TweetController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function index()
     {
@@ -35,7 +35,7 @@ class TweetController extends Controller
 
         if ($request->hasFile('file')) {
             $file = $request->file('file');
-            $request->validate([ 'file' => 'required|mimes:jpg,jpeg,png,mp4' ]);
+            $request->validate(['file' => 'required|mimes:jpg,jpeg,png,mp4']);
             $extension = $file->getClientOriginalExtension();
             $fileName = time() . '.' . $extension;
             $extension === 'mp4' ? $path = '/videos/' : $path = '/pics/';
