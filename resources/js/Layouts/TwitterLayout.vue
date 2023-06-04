@@ -66,9 +66,9 @@ const textareaInput = (e) => {
 <template>
     <div class="fixed w-full">
         <div class="max-w-[1400px] flex mx-auto">
-            <div class="lg:w-3/12 w-[60px] h-[100vh] max-w-[350px] lg:px-4 lg:mx-auto">
-                <div class="p-2 px-3 mb-4">
-                    <Twitter fillColor="#FFFFFF" :size="37" />
+            <section class="lg:w-3/12 w-[60px] h-[100vh] max-w-[350px] lg:px-4 lg:mx-auto">
+                <div class="p-2 mb-4">
+                    <img class="rounded-full mt-3 w-full" width="50" src="/img/leo-logo.png" />
                 </div>
 
                 <MenuItem iconString="Home" v-if="authUser"/>
@@ -84,19 +84,19 @@ const textareaInput = (e) => {
                     <span class="lg:block hidden">Tweet</span>
                     <span class="block lg:hidden"><Feather /></span>
                 </button>
-            </div>
+            </section>
 
-            <div class="lg:w-7/12 w-11/12 border-x border-gray-800 relative">
+            <section class="lg:w-7/12 w-11/12 border-x border-gray-800 relative">
                 <div class=" bg-black bg-opacity-50 backdrop-blur-md z-10 absolute w-full">
                     <div class="border-gray-800 border-b w-full">
                         <div class="w-full text-white text-[22px] font-extrabold p-4">
-                            Home
+                            Explore
                         </div>
                         <div class="flex">
                             <div
                                 class="flex items-center justify-center w-full h-[60px] text-white text-[17px] font-extrabold p-4 hover:bg-gray-500 hover:bg-opacity-30 cursor-pointer transition duration-200 ease-in-out">
                                 <div class="inline-block text-center border-b-4 border-b-[#1C9CEF] h-[60px]">
-                                    <div class="my-auto mt-4">For you </div>
+                                    <div class="my-auto mt-4">For you</div>
                                 </div>
                             </div>
                             <div
@@ -113,9 +113,9 @@ const textareaInput = (e) => {
                     <div class="pb-4"></div>
                 </div>
 
-            </div>
+            </section>
 
-            <div class="lg:block hidden lg:w-4/12 h-screen border-l border-gray-800 pl-4">
+            <section class="lg:block hidden lg:w-4/12 h-screen border-l border-gray-800 pl-4">
                 <div class="w-full p-1 mt-2 px-4 lg:flex items-center rounded-full hidden bg-[#212327]">
                 <Magnify fillColor="#5e5c5c" :size="25"/>
                     <input
@@ -187,8 +187,14 @@ const textareaInput = (e) => {
                         <div class="text-blue-500 p-4">Show more</div>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
+        <footer
+            v-if="!authUser"
+            class="absolute text-white bottom-0 w-full bg-red-400 h-16"
+        >
+            Log in / Sign up
+        </footer>
     </div>
 
     <div id="OverlaySection" v-if="createTweet" class="fixed top-0 left-0 w-full h-screen bg-black md:bg-gray-400 md:bg-opacity-30 md:p-3">
