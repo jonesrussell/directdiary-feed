@@ -5,12 +5,11 @@
     import DiaryLayout from '@/Layouts/DiaryLayout.vue';
 
     defineProps({ posts: Array })
-
 </script>
 
 <template>
 
-    <Head title="Diary" />
+    <Head title="Explore" />
 
     <DiaryLayout>
         <div class="text-white">

@@ -182,8 +182,6 @@ const textareaInput = (e) => {
                         </div>
                     </div>
 
-
-
                     <div class="hover:bg-gray-800 rounded-b-xl cursor-pointer transition duration-200 ease-in-out">
                         <div class="text-blue-500 p-4">Show more</div>
                     </div>
