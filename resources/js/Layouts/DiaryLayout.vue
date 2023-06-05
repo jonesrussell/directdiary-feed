@@ -71,7 +71,7 @@ const textareaInput = (e) => {
                 </div>
 
                 <MenuItem iconString="Home" v-if="authUser"/>
-                <MenuItem iconString="Explore" v-else/>
+                <MenuItem iconString="Explore"/>
                 <MenuItem iconString="Notifications" v-if="authUser"/>
                 <MenuItem iconString="Messages" v-if="authUser"/>
                 <MenuItem iconString="Profile" v-if="authUser"/>
