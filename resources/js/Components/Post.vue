@@ -2,7 +2,6 @@
 import { onMounted, ref } from 'vue';
 import { Link } from '@inertiajs/vue3';
 import HeartOutline from 'vue-material-design-icons/HeartOutline.vue'
-import ChartBar from 'vue-material-design-icons/ChartBar.vue'
 import MessageOutline from 'vue-material-design-icons/MessageOutline.vue'
 import Sync from 'vue-material-design-icons/Sync.vue'
 import DotsHorizontal from 'vue-material-design-icons/DotsHorizontal.vue'
@@ -11,7 +10,6 @@ import TrashCanOutline from 'vue-material-design-icons/TrashCanOutline.vue'
 defineProps({ post: Object });
 
 let openOptions = ref(false);
-
 </script>
 
 <template>
@@ -64,10 +62,6 @@ let openOptions = ref(false);
             <div class="flex">
                 <HeartOutline fillColor="#5e5c5c" :size="18" />
                 <span class="text-xs font-extrabold text-[#5e5c5c] ml-3">{{ post.likes }}</span>
-            </div>
-            <div class="flex">
-                <ChartBar fillColor="#5e5c5c" :size="18" />
-                <span class="text-xs font-extrabold text-[#5e5c5c] ml-3">{{ post.analytics }}</span>
             </div>
 
         </div>
