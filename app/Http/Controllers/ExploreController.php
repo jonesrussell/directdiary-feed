@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Inertia\Inertia;
 
@@ -15,7 +16,7 @@ class ExploreController extends Controller
     public function index()
     {
         return Inertia::render('Explore', [
-            'posts' => Post::orderBy('id', 'desc')->get()
+            'posts' => PostResource::collection(Post::orderBy('id', 'desc')->get()),
         ]);
     }
 

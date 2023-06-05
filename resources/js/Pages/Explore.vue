@@ -14,7 +14,7 @@
     <DiaryLayout>
         <div class="text-white">
 
-            <div class="flex" v-for="post in posts" :key="post">
+            <div class="flex" v-for="post in posts.data" :key="post">
                 <Post :post="post"/>
             </div>
             <div class="border-b border-b-gray-800 mt-2"></div>

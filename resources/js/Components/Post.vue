@@ -19,8 +19,13 @@ let openOptions = ref(false);
     <div class="p-2 w-full">
         <div class="font-extrabold flex items-center justify-between mt-0.5 mb-1.5">
             <div class="flex items-center">
-                <div>{{ post.name }}</div>
-                <span class="font-[300] text-[15px] text-gray-500 pl-2">{{ post.handle }}</span>
+                <div>
+                    {{ post.user.firstname }}
+                    {{ post.user.lastname }}
+                </div>
+                <span class="font-[300] text-[15px] text-gray-500 pl-2">
+                    @{{ post.user.username }}
+                </span>
             </div>
             <div class="hover:bg-gray-800 rounded-full cursor-pointer relative">
                 <button type="button" class="block p-2">
