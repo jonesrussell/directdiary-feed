@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { router, usePage } from '@inertiajs/vue3';
+import { router, usePage, Link } from '@inertiajs/vue3';
 import Magnify from 'vue-material-design-icons/Magnify.vue';
 import DotsHorizontal from 'vue-material-design-icons/DotsHorizontal.vue';
 import Feather from 'vue-material-design-icons/Feather.vue';
@@ -190,9 +190,20 @@ const textareaInput = (e) => {
         </div>
         <footer
             v-if="!authUser"
-            class="absolute text-white bottom-0 w-full bg-red-400 h-16"
+            class="absolute text-white bottom-0 w-full bg-red-400 h-20 flex space-x-4 justify-center items-center"
         >
-            Log in / Sign up
+            <Link
+                    href="/login"
+                    class="px-4 py-2 border text-white hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                    Log in
+            </Link>
+            <Link
+                    href="/register"
+                    class="px-4 py-2 border text-gray-800 bg-white hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                >
+                    Sign up
+            </Link>
         </footer>
     </div>
 
