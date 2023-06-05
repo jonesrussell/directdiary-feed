@@ -31,7 +31,7 @@ let openOptions = ref(false);
                         <Link
                             as="button"
                             method="delete"
-                            :href="route('tweets.destroy', { id: post.id })"
+                            :href="route('posts.destroy', { id: post.id })"
                             class="flex items-center cursor-pointer"
                         >
                             <TrashCanOutline class="pr-3" fillColor="#DC2626" :size="18"/>
@@ -41,7 +41,7 @@ let openOptions = ref(false);
                 </div>
             </div>
         </div>
-        <div class="pb-3">{{ post.tweet }}</div>
+        <div class="pb-3">{{ post.post }}</div>
         <div v-if="post.file">
             <div v-if="!post.is_video" class="rounded-xl">
                 <img :src="post.file" class="mt-2 object-fill rounded-xl w-full">
@@ -57,7 +57,7 @@ let openOptions = ref(false);
             </div>
             <div class="flex">
                 <Sync fillColor="#5e5c5c" :size="18" />
-                <span class="text-xs font-extrabold text-[#5e5c5c] ml-3">{{ post.retweets }}</span>
+                <span class="text-xs font-extrabold text-[#5e5c5c] ml-3">{{ post.reposts }}</span>
             </div>
             <div class="flex">
                 <HeartOutline fillColor="#5e5c5c" :size="18" />

@@ -2,26 +2,26 @@
     import { ref } from 'vue';
     import { Head, Link } from '@inertiajs/vue3';
     import Post from '@/Components/Post.vue'
-    import TwitterLayout from '@/Layouts/TwitterLayout.vue';
+    import DiaryLayout from '@/Layouts/DiaryLayout.vue';
 
-    defineProps({ tweets: Array })
+    defineProps({ posts: Array })
 
 </script>
 
 <template>
 
-    <Head title="Twitter" />
+    <Head title="Diary" />
 
-    <TwitterLayout>
+    <DiaryLayout>
         <div class="text-white">
 
-            <div class="flex" v-for="tweet in tweets" :key="tweet">
-                <Post :post="tweet"/>
+            <div class="flex" v-for="post in posts" :key="post">
+                <Post :post="post"/>
             </div>
             <div class="border-b border-b-gray-800 mt-2"></div>
         </div>
 
-    </TwitterLayout>
+    </DiaryLayout>
 </template>
 
 <style>

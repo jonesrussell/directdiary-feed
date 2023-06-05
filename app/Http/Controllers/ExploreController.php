@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tweet;
+use App\Models\Post;
 use Inertia\Inertia;
 
 class ExploreController extends Controller
@@ -15,7 +15,7 @@ class ExploreController extends Controller
     public function index()
     {
         return Inertia::render('Explore', [
-            'tweets' => Tweet::orderBy('id', 'desc')->get()
+            'posts' => Post::orderBy('id', 'desc')->get()
         ]);
     }
 

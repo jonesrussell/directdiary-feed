@@ -13,16 +13,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tweets', function (Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('image');
             $table->string('handle');
-            $table->text('tweet');
+            $table->text('post');
             $table->string('file')->nullable();
             $table->boolean('is_video')->nullable();
             $table->string('comments');
-            $table->string('retweets');
+            $table->string('reposts');
             $table->string('likes');
             $table->string('analytics');
             $table->timestamps();
@@ -36,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tweets');
+        Schema::dropIfExists('posts');
     }
 };

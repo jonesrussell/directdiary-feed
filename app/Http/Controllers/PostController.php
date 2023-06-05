@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tweet;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
-class TweetController extends Controller
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class TweetController extends Controller
     public function index()
     {
         return Inertia::render('Welcome', [
-            'tweets' => Tweet::orderBy('id', 'desc')->get()
+            'posts' => Post::orderBy('id', 'desc')->get()
         ]);
     }
 
@@ -41,23 +41,23 @@ class TweetController extends Controller
             $extension === 'mp4' ? $path = '/videos/' : $path = '/pics/';
         }
 
-        $tweet = new Tweet;
+        $post = new Post;
 
-        $tweet->name = 'John Weeks Dev';
-        $tweet->handle = '@johnweeksdev';
-        $tweet->image = 'https://yt3.ggpht.com/e9o-24_frmNSSVvjS47rT8qCHgsHNiedqgXbzmrmpsj6H1ketcufR1B9vLXTZRa30krRksPj=s88-c-k-c0x00ffffff-no-rj-mo';
-        $tweet->tweet = $request->input('tweet');
+        $post->name = 'John Weeks Dev';
+        $post->handle = '@johnweeksdev';
+        $post->image = 'https://yt3.ggpht.com/e9o-24_frmNSSVvjS47rT8qCHgsHNiedqgXbzmrmpsj6H1ketcufR1B9vLXTZRa30krRksPj=s88-c-k-c0x00ffffff-no-rj-mo';
+        $post->post = $request->input('post');
         if ($fileName) {
-            $tweet->file = $path . $fileName;
-            $tweet->is_video = $extension === 'mp4' ? true : false;
+            $post->file = $path . $fileName;
+            $post->is_video = $extension === 'mp4' ? true : false;
             $file->move(public_path() . $path, $fileName);
         }
-        $tweet->comments = rand(5, 500);
-        $tweet->retweets = rand(5, 500);
-        $tweet->likes = rand(5, 500);
-        $tweet->analytics = rand(5, 500);
+        $post->comments = rand(5, 500);
+        $post->reposts = rand(5, 500);
+        $post->likes = rand(5, 500);
+        $post->analytics = rand(5, 500);
 
-        $tweet->save();
+        $post->save();
     }
 
     /**
@@ -68,14 +68,14 @@ class TweetController extends Controller
      */
     public function destroy($id)
     {
-        $tweet = Tweet::find($id);
+        $post = Post::find($id);
 
-        if (!is_null($tweet->file) && file_exists(public_path() . $tweet->file)) {
-            unlink(public_path() . $tweet->file);
+        if (!is_null($post->file) && file_exists(public_path() . $post->file)) {
+            unlink(public_path() . $post->file);
         }
 
-        $tweet->delete();
+        $post->delete();
 
-        return redirect()->route('tweets.index');
+        return redirect()->route('posts.index');
     }
 }

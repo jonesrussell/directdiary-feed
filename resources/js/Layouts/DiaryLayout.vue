@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from 'vue';
 import { router, usePage } from '@inertiajs/vue3';
-import Twitter from 'vue-material-design-icons/Twitter.vue';
 import Magnify from 'vue-material-design-icons/Magnify.vue';
 import DotsHorizontal from 'vue-material-design-icons/DotsHorizontal.vue';
 import Feather from 'vue-material-design-icons/Feather.vue';
@@ -17,8 +16,8 @@ import MenuItem from '@/Components/MenuItem.vue'
 let { props } = usePage();
 let authUser = props.auth.user;
 
-let createTweet = ref(false)
-let tweet = ref('')
+let createPost = ref(false)
+let post = ref('')
 let file = ref('')
 let showUpload = ref('')
 let uploadType = ref('')
@@ -32,24 +31,24 @@ const getFile = (e) => {
 }
 
 const closeMessageBox = () => {
-    createTweet.value = false
-    tweet.value = ''
+    createPost.value = false
+    post.value = ''
     showUpload.value = ''
     uploadType.value = ''
 }
 
-const addTweet = () => {
-    if (!tweet.value) return
+const addPost = () => {
+    if (!post.value) return
 
     let data = new FormData()
 
-    data.append('tweet', tweet.value)
+    data.append('post', post.value)
     data.append('file', file.value)
 
-    router.post('/tweets', data)
+    router.post('/posts', data)
 
-    createTweet.value = false
-    tweet.value = ''
+    createPost.value = false
+    post.value = ''
     showUpload.value = ''
     uploadType.value = ''
 }
@@ -79,10 +78,10 @@ const textareaInput = (e) => {
 
                 <button
                     v-if="authUser"
-                    @click="createTweet = true"
+                    @click="createPost = true"
                     class="lg:w-full mt-8 ml-2 text-white font-extrabold text-[22px] bg-[#1C9CEF] p-3 px-3 rounded-full cursor-pointer"
                 >
-                    <span class="lg:block hidden">Tweet</span>
+                    <span class="lg:block hidden">Post</span>
                     <span class="block lg:hidden"><Feather /></span>
                 </button>
             </section>
@@ -133,7 +132,7 @@ const textareaInput = (e) => {
                             focus:ring-0
                         "
                         type="text"
-                        placeholder="Search Twitter"
+                        placeholder="Search Diary"
                     >
                 </div>
 
@@ -155,7 +154,7 @@ const textareaInput = (e) => {
                             <div>
                                 <div class="text-[14px] text-gray-400">Trending in United Kingdom</div>
                                 <div class="w-full text-white font-extrabold text-[17px]">Doomsday Clock</div>
-                                <div class="text-[14px] text-gray-400">5,923 Tweets</div>
+                                <div class="text-[14px] text-gray-400">5,923 Posts</div>
                             </div>
                             <DotsHorizontal fillColor="#5e5c5c"/>
                         </div>
@@ -166,7 +165,7 @@ const textareaInput = (e) => {
                             <div>
                                 <div class="text-[14px] text-gray-400">Sports · Trending</div>
                                 <div class="w-full text-white font-extrabold text-[17px]">Poro</div>
-                                <div class="text-[14px] text-gray-400">12,432 Tweets</div>
+                                <div class="text-[14px] text-gray-400">12,432 Posts</div>
                             </div>
                             <DotsHorizontal fillColor="#5e5c5c"/>
                         </div>
@@ -177,7 +176,7 @@ const textareaInput = (e) => {
                             <div>
                                 <div class="text-[14px] text-gray-400">Politics · Trending</div>
                                 <div class="w-full text-white font-extrabold text-[17px]">Sunak</div>
-                                <div class="text-[14px] text-gray-400">98,745 Tweets</div>
+                                <div class="text-[14px] text-gray-400">98,745 Posts</div>
                             </div>
                             <DotsHorizontal fillColor="#5e5c5c"/>
                         </div>
@@ -199,7 +198,7 @@ const textareaInput = (e) => {
         </footer>
     </div>
 
-    <div id="OverlaySection" v-if="createTweet" class="fixed top-0 left-0 w-full h-screen bg-black md:bg-gray-400 md:bg-opacity-30 md:p-3">
+    <div id="OverlaySection" v-if="createPost" class="fixed top-0 left-0 w-full h-screen bg-black md:bg-gray-400 md:bg-opacity-30 md:p-3">
         <div class="md:max-w-2xl md:mx-auto md:mt-10 md:rounded-xl bg-black">
 
             <div class=" flex items-center justify-between md:inline-block p-2 m-2 rounded-full cursor-pointer">
@@ -209,12 +208,12 @@ const textareaInput = (e) => {
                 </div>
 
                 <button
-                    :class="tweet ? 'bg-[#1C9CEF] text-white' : 'bg-[#124D77] text-gray-400'"
-                    :disabled="!tweet"
-                    @click="addTweet()"
+                    :class="post ? 'bg-[#1C9CEF] text-white' : 'bg-[#124D77] text-gray-400'"
+                    :disabled="!post"
+                    @click="addPost()"
                     class="md:hidden font-extrabold text-[16px] p-1.5 px-4 rounded-full cursor-pointer"
                 >
-                    Tweet
+                    Post
                 </button>
             </div>
             <div class="w-full flex">
@@ -232,7 +231,7 @@ const textareaInput = (e) => {
                         <textarea
                             ref="textarea"
                             :oninput="textareaInput"
-                            v-model="tweet"
+                            v-model="post"
                             placeholder="What's happening?"
                             cols="30"
                             rows="4"
@@ -273,12 +272,12 @@ const textareaInput = (e) => {
                             </div>
                         </div>
                         <button
-                            :class="tweet ? 'bg-[#1C9CEF] text-white' : 'bg-[#124D77] text-gray-400'"
-                            :disabled="!tweet"
-                            @click="addTweet()"
+                            :class="post ? 'bg-[#1C9CEF] text-white' : 'bg-[#124D77] text-gray-400'"
+                            :disabled="!post"
+                            @click="addPost()"
                             class=" hidden md:block font-extrabold text-[16px] p-1.5 px-4 rounded-full cursor-pointer"
                         >
-                            Tweet
+                            Post
                         </button>
                     </div>
                 </div>

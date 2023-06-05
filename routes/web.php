@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ExploreController;
-use App\Models\Tweet;
+use App\Models\Post;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -18,9 +18,9 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\TweetController::class, 'index'])->name('tweets.index');
-Route::post('/tweets', [\App\Http\Controllers\TweetController::class, 'store'])->name('tweets.store');
-Route::delete('/tweets/{id}', [\App\Http\Controllers\TweetController::class, 'destroy'])->name('tweets.destroy');
+Route::get('/', [\App\Http\Controllers\PostController::class, 'index'])->name('posts.index');
+Route::post('/posts', [\App\Http\Controllers\PostController::class, 'store'])->name('posts.store');
+Route::delete('/posts/{id}', [\App\Http\Controllers\PostController::class, 'destroy'])->name('posts.destroy');
 
 Route::get('/explore', [ExploreController::class, 'index'])->name('explore.index');
 

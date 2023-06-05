@@ -1,15 +1,4 @@
-# Twitter Clone (twitter-clone)
-
-### Tutorial showing you how to build Twitter
-
-If you'd like a step by step guide on how to build this just **CLICK THE IMAGE BELOW**
-
-[![GO TO JOHN WEEKS DEV TUTORIAL VIDEOS](https://user-images.githubusercontent.com/108229029/220173582-bd4beef4-165a-4272-a3c5-5c98a6e44918.png)](https://www.youtube.com/watch?v=RWJF0xSSaps)
-
-Come and check out my YOUTUBE channel for lots more tutorials -> https://www.youtube.com/@johnweeksdev
-
-**LIKE**, **SUBSCRIBE**, and **SMASH THE NOTIFICATION BELL**!!!
-
+# Direct Diary
 ## App Setup
 
 ```
