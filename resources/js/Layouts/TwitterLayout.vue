@@ -78,6 +78,7 @@ const textareaInput = (e) => {
                 <MenuItem iconString="Profile" v-if="authUser"/>
 
                 <button
+                    v-if="authUser"
                     @click="createTweet = true"
                     class="lg:w-full mt-8 ml-2 text-white font-extrabold text-[22px] bg-[#1C9CEF] p-3 px-3 rounded-full cursor-pointer"
                 >
