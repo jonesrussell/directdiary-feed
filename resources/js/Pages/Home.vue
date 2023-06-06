@@ -12,7 +12,7 @@
 
     <Head title="Diary" />
 
-    <DiaryLayout title="Home">
+    <DiaryLayout title="Home" show-for-you-following>
         <div class="text-white">
 
             <div class="flex" v-for="post in posts" :key="post">

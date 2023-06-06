@@ -15,12 +15,14 @@ import MenuItem from '@/Components/MenuItem.vue'
 
 const props = defineProps({
     title: String,
+    showForYouFollowing: Boolean,
 });
 
 const page = usePage();
 let authUser = page.props.auth.user;
 
 let title = props.title;
+let showForYouFollowing = props.showForYouFollowing;
 
 let createPost = ref(false)
 let post = ref('')
@@ -106,7 +108,7 @@ const textareaInput = (e) => {
                         <div class="w-full text-white text-[22px] font-extrabold p-4">
                             {{ title }}
                         </div>
-                        <div class="flex" v-if="authUser">
+                        <div class="flex" v-if="authUser && showForYouFollowing">
                             <div
                                 class="flex items-center justify-center w-full h-[60px] text-white text-[17px] font-extrabold p-4 hover:bg-gray-500 hover:bg-opacity-30 cursor-pointer transition duration-200 ease-in-out">
                                 <div class="inline-block text-center border-b-4 border-b-[#1C9CEF] h-[60px]">
