@@ -108,7 +108,7 @@ const textareaInput = (e) => {
                         <div class="w-full text-white text-[22px] font-extrabold p-4">
                             {{ title }}
                         </div>
-                        <div class="flex" v-if="authUser && showForYouFollowing">
+                        <div class="flex" v-if="showForYouFollowing">
                             <div
                                 class="flex items-center justify-center w-full h-[60px] text-white text-[17px] font-extrabold p-4 hover:bg-gray-500 hover:bg-opacity-30 cursor-pointer transition duration-200 ease-in-out">
                                 <div class="inline-block text-center border-b-4 border-b-[#1C9CEF] h-[60px]">
@@ -124,8 +124,8 @@ const textareaInput = (e) => {
                 </div>
 
                 <div class="absolute top-0 z-0 h-full w-full overflow-auto scrollbar-hide">
-                    <div class="mt-[80px]" v-if="!authUser"></div>
-                    <div class="mt-[126px]" v-if="authUser"></div>
+                    <div class="mt-[80px]" v-if="!showForYouFollowing"></div>
+                    <div class="mt-[126px]" v-if="showForYouFollowing"></div>
                     <slot />
                     <div class="pb-4"></div>
                 </div>
