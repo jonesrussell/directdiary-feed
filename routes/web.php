@@ -18,7 +18,10 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', [\App\Http\Controllers\PostController::class, 'index'])->name('posts.index');
+Route::get('/', function () {
+    return Inertia::render('Home');
+})->middleware(['auth', 'verified'])->name('home');
+
 Route::post('/posts', [\App\Http\Controllers\PostController::class, 'store'])->name('posts.store');
 Route::delete('/posts/{id}', [\App\Http\Controllers\PostController::class, 'destroy'])->name('posts.destroy');
 

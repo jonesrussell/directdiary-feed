@@ -70,8 +70,13 @@ const textareaInput = (e) => {
                     <img class="rounded-full mt-3 w-full" width="50" src="/img/leo-logo.png" />
                 </div>
 
-                <MenuItem iconString="Home" v-if="authUser"/>
-                <MenuItem iconString="Explore"/>
+                <Link href="/" v-if="authUser">
+                    <MenuItem iconString="Home"/>
+                </Link>
+                <Link href="/explore">
+                    <MenuItem iconString="Explore"/>
+                </Link>
+
                 <MenuItem iconString="Notifications" v-if="authUser"/>
                 <MenuItem iconString="Messages" v-if="authUser"/>
                 <MenuItem iconString="Profile" v-if="authUser"/>
