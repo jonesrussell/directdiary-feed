@@ -13,8 +13,14 @@ import Emoticon from 'vue-material-design-icons/Emoticon.vue';
 import ArrowLeft from 'vue-material-design-icons/ArrowLeft.vue';
 import MenuItem from '@/Components/MenuItem.vue'
 
-let { props } = usePage();
-let authUser = props.auth.user;
+const props = defineProps({
+    title: String,
+});
+
+const page = usePage();
+let authUser = page.props.auth.user;
+
+let title = props.title;
 
 let createPost = ref(false)
 let post = ref('')
@@ -79,7 +85,10 @@ const textareaInput = (e) => {
 
                 <MenuItem iconString="Notifications" v-if="authUser"/>
                 <MenuItem iconString="Messages" v-if="authUser"/>
-                <MenuItem iconString="Profile" v-if="authUser"/>
+                
+                <Link href="/profile">
+                    <MenuItem iconString="Profile" v-if="authUser"/>
+                </Link>
 
                 <button
                     v-if="authUser"
@@ -95,7 +104,7 @@ const textareaInput = (e) => {
                 <div class="bg-black bg-opacity-50 backdrop-blur-md z-10 absolute w-full">
                     <div class="border-gray-800 border-b w-full">
                         <div class="w-full text-white text-[22px] font-extrabold p-4">
-                            Explore
+                            {{ title }}
                         </div>
                         <div class="flex" v-if="authUser">
                             <div
@@ -106,7 +115,7 @@ const textareaInput = (e) => {
                             </div>
                             <div
                                 class="w-full h-[60px] text-gray-500 text-[17px] font-extrabold p-4 hover:bg-gray-500 hover:bg-opacity-30 cursor-pointer transition duration-200 ease-in-out">
-                                <div class="text-center"> Following </div>
+                                <div class="text-center">Following</div>
                             </div>
                         </div>
                     </div>

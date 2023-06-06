@@ -11,7 +11,7 @@
 
     <Head title="Explore" />
 
-    <DiaryLayout>
+    <DiaryLayout title="Explore">
         <div class="text-white">
 
             <div class="flex" v-for="post in posts.data" :key="post">
