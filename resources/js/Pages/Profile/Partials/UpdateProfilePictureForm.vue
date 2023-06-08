@@ -2,7 +2,6 @@
 import InputError from '@/Components/InputError.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
-import { computed } from 'vue';
 
 const user = usePage().props.auth.user;
 
