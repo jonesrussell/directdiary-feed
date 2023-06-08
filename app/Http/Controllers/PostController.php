@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class PostController extends Controller
@@ -44,8 +45,8 @@ class PostController extends Controller
 
         $post = new Post;
 
-        $post->name = 'John Weeks Dev';
-        $post->handle = '@johnweeksdev';
+        $user = Auth::user();
+        $post->user_id = $user->id;
         $post->image = 'https://yt3.ggpht.com/e9o-24_frmNSSVvjS47rT8qCHgsHNiedqgXbzmrmpsj6H1ketcufR1B9vLXTZRa30krRksPj=s88-c-k-c0x00ffffff-no-rj-mo';
         $post->post = $request->input('post');
         if ($fileName) {
@@ -56,7 +57,6 @@ class PostController extends Controller
         $post->comments = rand(5, 500);
         $post->reposts = rand(5, 500);
         $post->likes = rand(5, 500);
-        $post->analytics = rand(5, 500);
 
         $post->save();
     }

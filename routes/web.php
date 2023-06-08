@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ExploreController;
+use App\Http\Controllers\ProfilePictureController;
 use App\Models\Post;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('profile/picture', [ProfilePictureController::class, 'index'])->name('profile.picture.index');
+    Route::get('profile/picture/create', [ProfilePictureController::class, 'create'])->name('profile.picture.create');
+    Route::post('profile/picture', [ProfilePictureController::class, 'store'])->name('profile.picture.store');
 });
 
 require __DIR__ . '/auth.php';
