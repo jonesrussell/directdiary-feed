@@ -1,13 +1,9 @@
 <script setup>
 import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Link, useForm, usePage } from '@inertiajs/vue3';
+import { useForm, usePage } from '@inertiajs/vue3';
 
 const user = usePage().props.auth.user;
-
-console.log(user);
 
 const form = useForm({
     avatar: null,
@@ -18,14 +14,10 @@ let public_avatar = user.avatar;
 
 <template>
     <section>
-        <header>
-            <h2 class="text-lg font-medium text-gray-900">Picture</h2>
-        </header>
-
         <form @submit.prevent="form.post(route('profile.picture.store'))" class="mt-6 space-y-6">
             <div>
                 <div>
-                    <img :src="public_avatar" class="border-2 border-red-500 w-24 h-24" />
+                    <img :src="public_avatar" class="border border-black-500 rounded-full w-24 h-24 mb-4" />
                     <input type="file" @input="form.avatar = $event.target.files[0]" />
                     <progress v-if="form.progress" :value="form.progress.percentage" max="100">
                     {{ form.progress.percentage }}%

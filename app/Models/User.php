@@ -69,7 +69,8 @@ class User extends Authenticatable implements HasMedia
     protected function avatar(): Attribute
     {
         return new Attribute(
-            get: fn () => $this->getFirstMedia('avatar')['original_url'] ?? null,
+            get: fn () => $this->getFirstMedia('avatar')['original_url']
+                ?? 'https://randomuser.me/api/portraits/men/66.jpg',
         );
     }
 }
