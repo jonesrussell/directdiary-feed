@@ -2,6 +2,7 @@
 import InputError from '@/Components/InputError.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
+import { computed } from 'vue';
 
 const user = usePage().props.auth.user;
 
@@ -9,7 +10,9 @@ const form = useForm({
     avatar: null,
 });
 
-let public_avatar = user.avatar;
+let publicAvatar = user.avatar;
+
+const renderAvatar = (e) => publicAvatar = URL.createObjectURL(e.target.files[0]);
 </script>
 
 <template>
@@ -17,8 +20,8 @@ let public_avatar = user.avatar;
         <form @submit.prevent="form.post(route('profile.picture.store'))" class="mt-6 space-y-6">
             <div>
                 <div>
-                    <img :src="public_avatar" class="border border-black-500 rounded-full w-24 h-24 mb-4" />
-                    <input type="file" @input="form.avatar = $event.target.files[0]" />
+                    <img :src="publicAvatar" class="border border-black-500 rounded-full w-24 h-24 mb-4" />
+                    <input type="file" @input="form.avatar = $event.target.files[0]; renderAvatar($event);" />
                     <progress v-if="form.progress" :value="form.progress.percentage" max="100">
                     {{ form.progress.percentage }}%
                     </progress>
