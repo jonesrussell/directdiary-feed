@@ -11,11 +11,13 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Musonza\Chat\Traits\Messageable;
 
 class User extends Authenticatable implements HasMedia
 {
     use HasApiTokens, HasFactory, Notifiable;
     use InteractsWithMedia;
+    use Messageable;
 
     /**
      * The accessors to append to the model's array form.

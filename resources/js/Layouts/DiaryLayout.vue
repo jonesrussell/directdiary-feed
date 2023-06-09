@@ -86,7 +86,9 @@ const textareaInput = (e) => {
                 </Link>
 
                 <MenuItem iconString="Notifications" v-if="authUser"/>
-                <MenuItem iconString="Messages" v-if="authUser"/>
+                <Link href="/messages">
+                    <MenuItem iconString="Messages" v-if="authUser"/>
+                </Link>
                 
                 <Link href="/profile">
                     <MenuItem iconString="Profile" v-if="authUser"/>
