@@ -12,6 +12,7 @@ const props = defineProps({ post: Object });
 let openOptions = ref(false);
 
 let user = props.post.user;
+let avatar = props.post.user.avatar;
 let username = user.username;
 let fullname = `${user.firstname} ${user.lastname}`
 let profileUrl = `/${username}`
@@ -19,18 +20,18 @@ let profileUrl = `/${username}`
 
 <template>
     <div class="min-w-[60px]">
-        <img class="rounded-full m-2 mt-3" width="50" :src="post.image">
+        <img class="rounded-full m-2 mt-3" width="50" :src="avatar" />
     </div>
     <div class="p-2 w-full">
         <div class="font-extrabold flex items-center justify-between mt-0.5 mb-1.5">
             <div class="flex items-center">
                 <Link :href="profileUrl">
-                    <div>{{ fullname }}</div>
+                <div>{{ fullname }}</div>
                 </Link>
                 <Link :href="profileUrl">
-                    <span class="font-[300] text-[15px] text-gray-500 pl-2">
-                        @{{ username }}
-                    </span>
+                <span class="font-[300] text-[15px] text-gray-500 pl-2">
+                    @{{ username }}
+                </span>
                 </Link>
             </div>
             <div class="hover:bg-gray-800 rounded-full cursor-pointer relative">
