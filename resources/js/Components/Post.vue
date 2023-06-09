@@ -7,9 +7,14 @@ import Sync from 'vue-material-design-icons/Sync.vue'
 import DotsHorizontal from 'vue-material-design-icons/DotsHorizontal.vue'
 import TrashCanOutline from 'vue-material-design-icons/TrashCanOutline.vue'
 
-defineProps({ post: Object });
+const props = defineProps({ post: Object });
 
 let openOptions = ref(false);
+
+let user = props.post.user;
+let username = user.username;
+let fullname = `${user.firstname} ${user.lastname}`
+let profileUrl = `/${username}`
 </script>
 
 <template>
@@ -19,28 +24,26 @@ let openOptions = ref(false);
     <div class="p-2 w-full">
         <div class="font-extrabold flex items-center justify-between mt-0.5 mb-1.5">
             <div class="flex items-center">
-                <div>
-                    {{ post.user.firstname }}
-                    {{ post.user.lastname }}
-                </div>
-                <span class="font-[300] text-[15px] text-gray-500 pl-2">
-                    @{{ post.user.username }}
-                </span>
+                <Link :href="profileUrl">
+                    <div>{{ fullname }}</div>
+                </Link>
+                <Link :href="profileUrl">
+                    <span class="font-[300] text-[15px] text-gray-500 pl-2">
+                        @{{ username }}
+                    </span>
+                </Link>
             </div>
             <div class="hover:bg-gray-800 rounded-full cursor-pointer relative">
                 <button type="button" class="block p-2">
                     <DotsHorizontal @click="openOptions = !openOptions" />
                 </button>
-                <div v-if="openOptions" class="absolute mt-1 right-0 w-[300px] bg-black border border-gray-700 rounded-lg shadow-lg">
+                <div v-if="openOptions"
+                    class="absolute mt-1 right-0 w-[300px] bg-black border border-gray-700 rounded-lg shadow-lg">
                     <ul class="p-3">
-                        <Link
-                            as="button"
-                            method="delete"
-                            :href="route('posts.destroy', { id: post.id })"
-                            class="flex items-center cursor-pointer"
-                        >
-                            <TrashCanOutline class="pr-3" fillColor="#DC2626" :size="18"/>
-                            <span class="text-red-600 font-extrabold">Delete</span>
+                        <Link as="button" method="delete" :href="route('posts.destroy', { id: post.id })"
+                            class="flex items-center cursor-pointer">
+                        <TrashCanOutline class="pr-3" fillColor="#DC2626" :size="18" />
+                        <span class="text-red-600 font-extrabold">Delete</span>
                         </Link>
                     </ul>
                 </div>
