@@ -236,12 +236,6 @@ const textareaInput = (e) => {
                     <img class="rounded-full" width="55" :src="randImg1" />
                 </div>
                 <div class="w-[calc(100%-100px)]">
-                    <div class="inline-block">
-                        <div class="flex items-center border border-gray-700 rounded-full">
-                            <span class="text-[#1C9CEF] p-0.5 pl-3.5 font-extrabold">Everyone</span>
-                            <ChevronDown class="pr-2" fillColor="#1C9CEF" :size="25" />
-                        </div>
-                    </div>
                     <div>
                         <textarea ref="textarea" :oninput="textareaInput" v-model="post" placeholder="What's happening?"
                             cols="30" rows="4" class="
@@ -265,20 +259,6 @@ const textareaInput = (e) => {
                     </div>
                     <div class="border-b border-b-gray-700"></div>
                     <div class="flex items-center justify-between py-2">
-                        <div class="flex items-center">
-                            <div class="hover:bg-gray-800 inline-block p-2 rounded-full cursor-pointer">
-                                <label for="fileUpload" class="cursor-pointer">
-                                    <ImageOutline fillColor="#1C9CEF" :size="25" />
-                                </label>
-                                <input type="file" id="fileUpload" class="hidden" @change="getFile">
-                            </div>
-                            <div class="hover:bg-gray-800 inline-block p-2 rounded-full cursor-pointer">
-                                <FileGifBox fillColor="#1C9CEF" :size="25" />
-                            </div>
-                            <div class="hover:bg-gray-800 inline-block p-2 rounded-full cursor-pointer">
-                                <Emoticon fillColor="#1C9CEF" :size="25" />
-                            </div>
-                        </div>
                         <button :class="post ? 'bg-[#1C9CEF] text-white' : 'bg-[#124D77] text-gray-400'" :disabled="!post"
                             @click="addPost()"
                             class=" hidden md:block font-extrabold text-[16px] p-1.5 px-4 rounded-full cursor-pointer">

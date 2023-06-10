@@ -1,9 +1,6 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import { Link } from '@inertiajs/vue3';
-import HeartOutline from 'vue-material-design-icons/HeartOutline.vue'
-import MessageOutline from 'vue-material-design-icons/MessageOutline.vue'
-import Sync from 'vue-material-design-icons/Sync.vue'
 import DotsHorizontal from 'vue-material-design-icons/DotsHorizontal.vue'
 import TrashCanOutline from 'vue-material-design-icons/TrashCanOutline.vue'
 
@@ -53,26 +50,11 @@ let profileUrl = `/${username}`
         <div class="pb-3">{{ post.post }}</div>
         <div v-if="post.file">
             <div v-if="!post.is_video" class="rounded-xl">
-                <img :src="post.file" class="mt-2 object-fill rounded-xl w-full">
+                <img :src="post.file" class="mt-2 object-fill rounded-xl w-full" />
             </div>
             <div v-else>
                 <video class="rounded-xl" :src="post.file" controls></video>
             </div>
-        </div>
-        <div class="flex items-center justify-between mt-4 w-4/5">
-            <div class="flex">
-                <MessageOutline fillColor="#5e5c5c" :size="18" />
-                <span class="text-xs font-extrabold text-[#5e5c5c] ml-3">0</span>
-            </div>
-            <div class="flex">
-                <Sync fillColor="#5e5c5c" :size="18" />
-                <span class="text-xs font-extrabold text-[#5e5c5c] ml-3">0</span>
-            </div>
-            <div class="flex">
-                <HeartOutline fillColor="#5e5c5c" :size="18" />
-                <span class="text-xs font-extrabold text-[#5e5c5c] ml-3">0</span>
-            </div>
-
         </div>
     </div>
 </template>
