@@ -45,9 +45,7 @@ class UsersSeeder extends Seeder
             'password'  => Hash::make('direct202'),
         ]); //->assignRole($adminRole);
 
-        // User::factory()->afterCreating(function ($user, $faker) use ($adminRole, $domainerRole, $freelancerRole) {
-        //     $roles = Role::all()->except([$adminRole->id]); // exclude the admin role
-        //     $user->assignRole($roles->random());
-        // })->count(7)->create();
+        User::factory()->afterCreating(function ($user, $faker) {
+        })->count(7)->create();
     }
 }

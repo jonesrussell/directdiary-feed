@@ -5,6 +5,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ExploreController;
 use App\Http\Controllers\ProfilePictureController;
 use App\Http\Controllers\PublicProfileController;
+use App\Http\Controllers\PublicProfileDomainsController;
 use App\Models\Post;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -47,5 +48,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('{username}', [PublicProfileController::class, 'show']);
+Route::get('{username}/domains', [PublicProfileDomainsController::class, 'show']);
 
 require __DIR__ . '/auth.php';

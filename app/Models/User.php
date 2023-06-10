@@ -58,14 +58,6 @@ class User extends Authenticatable implements HasMedia
     ];
 
     /**
-     * Get the posts for the user.
-     */
-    public function posts(): HasMany
-    {
-        return $this->hasMany(Post::class);
-    }
-
-    /**
      * Return a user's avatar url.
      */
     protected function avatar(): Attribute
@@ -74,5 +66,18 @@ class User extends Authenticatable implements HasMedia
             get: fn () => $this->getFirstMedia('avatar')['original_url']
                 ?? 'https://randomuser.me/api/portraits/men/66.jpg',
         );
+    }
+
+    public function domains()
+    {
+        return $this->hasMany(Domain::class);
+    }
+
+    /**
+     * Get the posts for the user.
+     */
+    public function posts(): HasMany
+    {
+        return $this->hasMany(Post::class);
     }
 }
