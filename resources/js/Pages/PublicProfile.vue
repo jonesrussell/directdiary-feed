@@ -5,12 +5,9 @@ import Post from '@/Components/Post.vue';
 
 const props = defineProps({ profile: Array });
 
-console.log(props.profile);
-
 let username = props.profile.username;
 let fullname = `${props.profile.firstname} ${props.profile.lastname}`
 let posts = props.profile?.posts;
-console.log('posts', posts);
 </script>
 
 <template>

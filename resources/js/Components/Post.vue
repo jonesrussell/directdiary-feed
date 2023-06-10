@@ -9,8 +9,6 @@ import TrashCanOutline from 'vue-material-design-icons/TrashCanOutline.vue'
 
 const props = defineProps({ post: Object });
 
-console.log('props.post', props.post)
-
 let openOptions = ref(false);
 
 let user = props.post.user;
