@@ -13,9 +13,19 @@ class PublicProfileController extends Controller
      */
     public function show($username)
     {
+        return $this->showUnified($username, 'posts');
+    }
+
+    public function domains($username)
+    {
+        return $this->showUnified($username, 'domains');
+    }
+
+    public function showUnified($username, $view)
+    {
         $user = User::with(['posts' => function ($query) {
             $query->orderBy('created_at', 'desc');
-        }])->where('username', '=', $username)->first();
+        }, 'domains'])->where('username', '=', $username)->first();
 
         if ($user) {
             $user->posts = (new PostCollection($user->posts))->toArray(request());
@@ -23,15 +33,7 @@ class PublicProfileController extends Controller
 
         return Inertia::render('PublicProfile', [
             'profile' => $user,
-        ]);
-    }
-
-    public function domains($username)
-    {
-        $user = User::with('domains')->where('username', '=', $username)->first();
-
-        return Inertia::render('UserDomains', [
-            'domains' => $user->domains,
+            'view' => $view
         ]);
     }
 }

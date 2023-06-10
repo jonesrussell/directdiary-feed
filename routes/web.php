@@ -50,4 +50,4 @@ Route::middleware('auth')->group(function () {
 require __DIR__ . '/auth.php';
 
 Route::get('{username}', [PublicProfileController::class, 'show']);
-Route::get('{username}/domains', [PublicProfileDomainsController::class, 'show']);
+Route::get('{username}/domains', [PublicProfileController::class, 'domains']);

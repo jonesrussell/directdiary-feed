@@ -3,11 +3,12 @@ import { Head, Link } from '@inertiajs/vue3';
 import DiaryLayout from '@/Layouts/DiaryLayout.vue';
 import Post from '@/Components/Post.vue';
 
-const props = defineProps({ profile: Array });
+const props = defineProps({ profile: Array, view: String });
 
 let username = props.profile?.username;
 let fullname = `${props.profile?.firstname} ${props.profile?.lastname}`
 let posts = props.profile?.posts;
+let domains = props.profile?.domains;
 let profileUrl = `/${username}`
 let profileDomainsUrl = `/${username}/domains`
 </script>
@@ -39,10 +40,21 @@ let profileDomainsUrl = `/${username}/domains`
             </div>
         </div>
 
-        <div class="flex" v-for="post in posts" :key="post">
-            <Post :post="post" />
-        </div>
+        <template v-if="view === 'posts'">
+            <div class="flex" v-for="post in posts" :key="post">
+                <Post :post="post" />
+            </div>
+        </template>
 
+        <template v-else-if="view === 'domains'">
+            <div class="flex flex-col" v-for="domain in domains" :key="domain.name">
+                <div class="text-white">
+                    <div class="m-4">
+                        <a :href="domain.url" target="_blank">{{ domain.name }}.{{ domain.extension }}</a>
+                    </div>
+                </div>
+            </div>
+        </template>
     </DiaryLayout>
 </template>
 
