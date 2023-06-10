@@ -44,7 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::get('profile/picture/create', [ProfilePictureController::class, 'create'])->name('profile.picture.create');
     Route::post('profile/picture', [ProfilePictureController::class, 'store'])->name('profile.picture.store');
 
-    Route::get('messages', [ConversationController::class, 'index']);
+    Route::resource('messages', ConversationController::class)->names('messages');
 });
 
 require __DIR__ . '/auth.php';

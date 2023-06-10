@@ -1,9 +1,15 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, usePage } from '@inertiajs/vue3';
 import DiaryLayout from '@/Layouts/DiaryLayout.vue';
 import Post from '@/Components/Post.vue';
+import EmailOutline from 'vue-material-design-icons/EmailOutline.vue';
+import { useForm } from '@inertiajs/vue3';
 
 const props = defineProps({ profile: Array, view: String });
+
+const page = usePage();
+let authUserId = page.props.auth.user.id;
+console.log(props.profile?.id);
 
 let username = props.profile?.username;
 let fullname = `${props.profile?.firstname} ${props.profile?.lastname}`
@@ -11,6 +17,20 @@ let posts = props.profile?.posts;
 let domains = props.profile?.domains;
 let profileUrl = `/${username}`
 let profileDomainsUrl = `/${username}/domains`
+
+// Define the form data
+const messageForm = useForm({
+    participants: [
+        { id: authUserId, type: '\\App\\Models\\User' },
+        { id: props.profile?.id, type: '\\App\\Models\\User' },
+    ],
+});
+
+// Define the click handler
+const iconClickHandler = () => {
+    console.log('clicked message icon');
+    messageForm.post('/messages');
+};
 </script>
 
 <template>
@@ -18,7 +38,12 @@ let profileDomainsUrl = `/${username}/domains`
 
     <DiaryLayout :title="fullname" showProfileTabs>
         <div class="m-4 text-white">
-            <img :src="profile?.avatar" class="rounded-full mb-4" />
+            <div class="flex justify-between">
+                <img :src="profile?.avatar" class="rounded-full mb-4" />
+                <div class="border rounded-full w-9 h-9 p-1 hover:cursor-pointer" @click="iconClickHandler">
+                    <component :is="EmailOutline" fillColor="#FFFFFF" :size="25" />
+                </div>
+            </div>
             <div>{{ fullname }}</div>
             <div>@{{ username }}</div>
         </div>

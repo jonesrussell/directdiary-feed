@@ -62,15 +62,13 @@ class ConversationController extends Controller
     }
 
     /**
-     * Create a Negotiation
-     *
-     * @param  \App\Http\Requests\Chat\StoreConversationRequest  $request
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
-     * @throws \Throwable
+     * Create a Conversation
      */
     public function store(StoreConversationRequest $request)
     {
+        $user = User::find(Auth::user()->id);
+        $conversations = Chat::conversations()->setParticipant($user)->isDirect()->get();
+
         $participants = $request->participants();
 
         // Get the participants in the conversation
@@ -87,7 +85,11 @@ class ConversationController extends Controller
         // Create a new conversation
         $conversation = Chat::createConversation($participants)->makeDirect();
 
-        return $this->itemResponse($conversation);
+        logger($conversation);
+        return Inertia::render('Messages/MessagesIndex', [
+            'conversations' => $conversations,
+            'conversation' => $conversation,
+        ]);
     }
 
     public function show($id)
