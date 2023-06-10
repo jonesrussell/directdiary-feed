@@ -64,7 +64,7 @@ class User extends Authenticatable implements HasMedia
     {
         return new Attribute(
             get: fn () => $this->getFirstMedia('avatar')['original_url']
-                ?? 'https://randomuser.me/api/portraits/men/66.jpg',
+                ?? "https://ui-avatars.com/api/?name={$this->firstname}+{$this->lastname}",
         );
     }
 
