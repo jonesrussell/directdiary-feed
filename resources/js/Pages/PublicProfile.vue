@@ -5,8 +5,8 @@ import Post from '@/Components/Post.vue';
 
 const props = defineProps({ profile: Array });
 
-let username = props.profile.username;
-let fullname = `${props.profile.firstname} ${props.profile.lastname}`
+let username = props.profile?.username;
+let fullname = `${props.profile?.firstname} ${props.profile?.lastname}`
 let posts = props.profile?.posts;
 let profileUrl = `/${username}`
 let profileDomainsUrl = `/${username}/domains`
@@ -17,7 +17,7 @@ let profileDomainsUrl = `/${username}/domains`
 
     <DiaryLayout :title="fullname" showProfileTabs>
         <div class="m-4 text-white">
-            <img :src="profile.avatar" class="rounded-full mb-4" />
+            <img :src="profile?.avatar" class="rounded-full mb-4" />
             <div>{{ fullname }}</div>
             <div>@{{ username }}</div>
         </div>

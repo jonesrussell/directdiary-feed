@@ -47,7 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::get('messages', [ConversationController::class, 'index']);
 });
 
+require __DIR__ . '/auth.php';
+
 Route::get('{username}', [PublicProfileController::class, 'show']);
 Route::get('{username}/domains', [PublicProfileDomainsController::class, 'show']);
-
-require __DIR__ . '/auth.php';

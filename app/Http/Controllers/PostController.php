@@ -47,7 +47,6 @@ class PostController extends Controller
 
         $user = Auth::user();
         $post->user_id = $user->id;
-        $post->image = 'https://yt3.ggpht.com/e9o-24_frmNSSVvjS47rT8qCHgsHNiedqgXbzmrmpsj6H1ketcufR1B9vLXTZRa30krRksPj=s88-c-k-c0x00ffffff-no-rj-mo';
         $post->post = $request->input('post');
         if ($fileName) {
             $post->file = $path . $fileName;
