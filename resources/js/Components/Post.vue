@@ -62,15 +62,15 @@ let profileUrl = `/${username}`
         <div class="flex items-center justify-between mt-4 w-4/5">
             <div class="flex">
                 <MessageOutline fillColor="#5e5c5c" :size="18" />
-                <span class="text-xs font-extrabold text-[#5e5c5c] ml-3">{{ post.comments }}</span>
+                <span class="text-xs font-extrabold text-[#5e5c5c] ml-3">0</span>
             </div>
             <div class="flex">
                 <Sync fillColor="#5e5c5c" :size="18" />
-                <span class="text-xs font-extrabold text-[#5e5c5c] ml-3">{{ post.reposts }}</span>
+                <span class="text-xs font-extrabold text-[#5e5c5c] ml-3">0</span>
             </div>
             <div class="flex">
                 <HeartOutline fillColor="#5e5c5c" :size="18" />
-                <span class="text-xs font-extrabold text-[#5e5c5c] ml-3">{{ post.likes }}</span>
+                <span class="text-xs font-extrabold text-[#5e5c5c] ml-3">0</span>
             </div>
 
         </div>

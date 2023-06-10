@@ -19,9 +19,9 @@ return new class extends Migration
             $table->text('post');
             $table->string('file')->nullable();
             $table->boolean('is_video')->nullable();
-            $table->string('comments');
-            $table->string('reposts');
-            $table->string('likes');
+            // $table->string('comments');
+            // $table->string('reposts');
+            // $table->string('likes');
             $table->timestamps();
         });
     }

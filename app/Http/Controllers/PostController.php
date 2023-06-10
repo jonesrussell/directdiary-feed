@@ -53,9 +53,6 @@ class PostController extends Controller
             $post->is_video = $extension === 'mp4' ? true : false;
             $file->move(public_path() . $path, $fileName);
         }
-        $post->comments = rand(5, 500);
-        $post->reposts = rand(5, 500);
-        $post->likes = rand(5, 500);
 
         $post->save();
     }

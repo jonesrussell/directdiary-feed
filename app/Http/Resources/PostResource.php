@@ -21,9 +21,6 @@ class PostResource extends JsonResource
             'post' => $this->post,
             'file' => $this->file,
             'is_video' => $this->is_video,
-            'comments' => $this->comments,
-            'reposts' => $this->reposts,
-            'likes' => $this->likes,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
