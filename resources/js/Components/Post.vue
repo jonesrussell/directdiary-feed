@@ -9,6 +9,8 @@ import TrashCanOutline from 'vue-material-design-icons/TrashCanOutline.vue'
 
 const props = defineProps({ post: Object });
 
+console.log('props.post', props.post)
+
 let openOptions = ref(false);
 
 let user = props.post.user;
@@ -22,7 +24,7 @@ let profileUrl = `/${username}`
     <div class="min-w-[60px]">
         <img class="rounded-full m-2 mt-3" width="50" :src="avatar" />
     </div>
-    <div class="p-2 w-full">
+    <div class="p-2 w-full text-white">
         <div class="font-extrabold flex items-center justify-between mt-0.5 mb-1.5">
             <div class="flex items-center">
                 <Link :href="profileUrl">

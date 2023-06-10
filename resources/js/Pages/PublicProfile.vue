@@ -1,6 +1,7 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
 import DiaryLayout from '@/Layouts/DiaryLayout.vue';
+import Post from '@/Components/Post.vue';
 
 const props = defineProps({ profile: Array });
 
@@ -8,6 +9,8 @@ console.log(props.profile);
 
 let username = props.profile.username;
 let fullname = `${props.profile.firstname} ${props.profile.lastname}`
+let posts = props.profile?.posts;
+console.log('posts', posts);
 </script>
 
 <template>
@@ -31,6 +34,10 @@ let fullname = `${props.profile.firstname} ${props.profile.lastname}`
                 class="w-full h-[60px] text-gray-500 text-[17px] font-extrabold p-4 hover:bg-gray-500 hover:bg-opacity-30 cursor-pointer transition duration-200 ease-in-out">
                 <div class="text-center">Domains</div>
             </div>
+        </div>
+
+        <div class="flex" v-for="post in posts" :key="post">
+            <Post :post="post" />
         </div>
 
     </DiaryLayout>

@@ -16,18 +16,7 @@ class ExploreController extends Controller
     public function index()
     {
         return Inertia::render('Explore', [
-            'posts' => PostResource::collection(Post::orderBy('id', 'desc')->get()),
+            'posts' => PostResource::collection(Post::orderBy('created_at', 'desc')->get()),
         ]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 }

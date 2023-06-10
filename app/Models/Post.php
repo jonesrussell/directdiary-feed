@@ -11,6 +11,10 @@ class Post extends Model
 {
     use HasFactory;
 
+    protected $append = [
+        'user',
+    ];
+
     protected $fillable = [
         'user_id',
     ];
