@@ -1,11 +1,12 @@
 <script setup>
-import { onMounted, ref } from 'vue';
-import { Link } from '@inertiajs/vue3';
-import HeartOutline from 'vue-material-design-icons/HeartOutline.vue'
-import MessageOutline from 'vue-material-design-icons/MessageOutline.vue'
-import Sync from 'vue-material-design-icons/Sync.vue'
+import { ref } from 'vue';
+import { Link, usePage } from '@inertiajs/vue3';
 import DotsHorizontal from 'vue-material-design-icons/DotsHorizontal.vue'
 import TrashCanOutline from 'vue-material-design-icons/TrashCanOutline.vue'
+
+const page = usePage();
+let authUserId = page.props.auth.user.id;
+console.log(authUserId);
 
 let props = defineProps({ conversation: Object });
 
@@ -13,24 +14,31 @@ let openOptions = ref(false);
 
 console.log(props.conversation);
 
-let c = props.conversation.conversation;
-let participants = c.participants;
-console.log(c);
+let convo = props.conversation.conversation;
+console.log('convo', convo);
+
+// Extract the participants array
+let participants = convo.participants;
+
+// Filter out the authenticated user
+let otherUser = participants.find(participant => participant.messageable.id !== authUserId);
+
+let lastMessage = 'Last message goes here.';
 </script>
 
 <template>
-    <div class="min-w-[60px]">
-        <img class="rounded-full m-2 mt-3" width="50" :src="conversation?.image">
+    <div>
+        <img :src="otherUser?.messageable?.avatar" class="rounded-full mb-4 w-8 h-8 m-2 mt-3" />
     </div>
     <div class="p-2 w-full">
         <div class="font-extrabold flex items-center justify-between mt-0.5 mb-1.5">
-            <div class="flex items-center">
+            <div class="flex items-center ">
                 <div>
-                    {{ conversation?.user?.firstname }}
-                    {{ conversation?.user?.lastname }}
+                    {{ otherUser?.messageable?.firstname }}
+                    {{ otherUser?.messageable?.lastname }}
                 </div>
                 <span class="font-[300] text-[15px] text-gray-500 pl-2">
-                    @{{ conversation?.user?.username }}
+                    @{{ otherUser?.messageable?.username }}
                 </span>
             </div>
             <div class="hover:bg-gray-800 rounded-full cursor-pointer relative">
@@ -50,7 +58,7 @@ console.log(c);
             </div>
         </div>
 
-        <div class="pb-3">{{ conversation?.conversation }}</div>
+        <div class="pb-3">{{ lastMessage }}</div>
 
     </div>
 </template>
