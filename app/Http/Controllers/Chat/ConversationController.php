@@ -85,11 +85,7 @@ class ConversationController extends Controller
         // Create a new conversation
         $conversation = Chat::createConversation($participants)->makeDirect();
 
-        logger($conversation);
-        return Inertia::render('Messages/MessagesIndex', [
-            'conversations' => $conversations,
-            'conversation' => $conversation,
-        ]);
+        return $this->index();
     }
 
     public function show($id)

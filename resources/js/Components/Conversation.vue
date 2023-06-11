@@ -7,9 +7,15 @@ import Sync from 'vue-material-design-icons/Sync.vue'
 import DotsHorizontal from 'vue-material-design-icons/DotsHorizontal.vue'
 import TrashCanOutline from 'vue-material-design-icons/TrashCanOutline.vue'
 
-defineProps({ conversation: Object });
+let props = defineProps({ conversation: Object });
 
 let openOptions = ref(false);
+
+console.log(props.conversation);
+
+let c = props.conversation.conversation;
+let participants = c.participants;
+console.log(c);
 </script>
 
 <template>
@@ -31,23 +37,20 @@ let openOptions = ref(false);
                 <button type="button" class="block p-2">
                     <DotsHorizontal @click="openOptions = !openOptions" />
                 </button>
-                <div v-if="openOptions" class="absolute mt-1 right-0 w-[300px] bg-black border border-gray-700 rounded-lg shadow-lg">
+                <div v-if="openOptions"
+                    class="absolute mt-1 right-0 w-[300px] bg-black border border-gray-700 rounded-lg shadow-lg">
                     <ul class="p-3">
-                        <Link
-                            as="button"
-                            method="delete"
-                            :href="route('conversations.destroy', { id: conversation.id })"
-                            class="flex items-center cursor-pointer"
-                        >
-                            <TrashCanOutline class="pr-3" fillColor="#DC2626" :size="18"/>
-                            <span class="text-red-600 font-extrabold">Delete</span>
+                        <Link as="button" method="delete" :href="route('conversations.destroy', { id: conversation.id })"
+                            class="flex items-center cursor-pointer">
+                        <TrashCanOutline class="pr-3" fillColor="#DC2626" :size="18" />
+                        <span class="text-red-600 font-extrabold">Delete</span>
                         </Link>
                     </ul>
                 </div>
             </div>
         </div>
-        
+
         <div class="pb-3">{{ conversation?.conversation }}</div>
-        
+
     </div>
 </template>
