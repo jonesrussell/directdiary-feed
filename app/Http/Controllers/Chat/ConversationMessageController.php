@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Chat;
 
 use App\Http\Controllers\Controller;
 use Chat;
+use Inertia\Inertia;
 use Musonza\Chat\Http\Requests\ClearConversation;
 use Musonza\Chat\Http\Requests\DeleteMessage;
 use Musonza\Chat\Http\Requests\GetParticipantMessages;
@@ -27,6 +28,7 @@ class ConversationMessageController extends Controller
 
     private function itemResponse($message)
     {
+        logger('itemResponse');
         if ($this->messageTransformer) {
             return fractal($message, $this->messageTransformer)->respond();
         }
@@ -36,9 +38,10 @@ class ConversationMessageController extends Controller
 
     public function index(GetParticipantMessages $request, $conversationId)
     {
+        logger('index');
         $conversation = Chat::conversations()->getById($conversationId);
         $participants = $conversation->getParticipants();
-        $message      = Chat::conversation($conversation)
+        $message = Chat::conversation($conversation)
             ->setParticipant($request->getParticipant())
             ->setPaginationParams($request->getPaginationParams())
             ->getMessages();
@@ -49,14 +52,21 @@ class ConversationMessageController extends Controller
         ];
 
         if ($this->messageTransformer) {
-            return fractal($data, $this->messageTransformer)->respond();
+            $data = fractal($data, $this->messageTransformer)->toArray();
         }
 
-        return response($data);
+        return Inertia::render('Messages/Messages', [
+            'form' => [
+                'response' => [
+                    'data' => $data
+                ]
+            ]
+        ]);
     }
 
     public function show(GetParticipantMessages $request, $conversationId, $messageId)
     {
+        logger('show');
         $message = Chat::messages()->getById($messageId);
 
         return $this->itemResponse($message);

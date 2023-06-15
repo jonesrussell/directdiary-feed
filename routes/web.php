@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Chat\ConversationController;
+use App\Http\Controllers\Chat\ConversationMessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ExploreController;
 use App\Http\Controllers\ProfilePictureController;
@@ -44,7 +45,13 @@ Route::middleware('auth')->group(function () {
     Route::get('profile/picture/create', [ProfilePictureController::class, 'create'])->name('profile.picture.create');
     Route::post('profile/picture', [ProfilePictureController::class, 'store'])->name('profile.picture.store');
 
-    Route::resource('messages', ConversationController::class)->names('messages');
+    Route::resource('messages', ConversationController::class)->names('conversations');
+
+    Route::get('msg/{conversationId}', [ConversationMessageController::class, 'index'])->name('messages.index');
+    Route::get('msg/{conversationId}/{messageId}', [ConversationMessageController::class, 'show'])->name('messages.show');
+    Route::post('msg/{conversationId}', [ConversationMessageController::class, 'store'])->name('messages.store');
+    Route::delete('msg/{conversationId}', [ConversationMessageController::class, 'deleteAll'])->name('messages.deleteAll');
+    Route::delete('msg/{conversationId}/{messageId}', [ConversationMessageController::class, 'destroy'])->name('messages.destroy');
 });
 
 require __DIR__ . '/auth.php';

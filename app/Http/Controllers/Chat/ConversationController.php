@@ -14,6 +14,7 @@ use Musonza\Chat\Exceptions\DeletingConversationWithParticipantsException;
 use Musonza\Chat\Http\Requests\DestroyConversation;
 use Musonza\Chat\Http\Requests\UpdateConversation;
 use Musonza\Chat\Models\Conversation;
+use Musonza\Chat\Http\Requests\GetParticipantMessages;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 use Inertia\Inertia;
 
@@ -45,19 +46,17 @@ class ConversationController extends Controller
     public function index()
     {
         $user = User::find(Auth::user()->id);
-
         $conversations = Chat::conversations()->setParticipant($user)->isDirect()->get();
 
-        if ($this->conversationTransformer) {
-            return fractal()
-                ->collection($conversations)
-                ->transformWith($this->conversationTransformer)
-                ->respond();
+        // Fetch the messages for the first conversation
+        $firstConversationMessages = []; // Fetch this data accordingly
+        if ($conversationId) {
+            $firstConversationMessages = ['foo']; // Fetch this data accordingly
         }
 
-        logger($conversations);
         return Inertia::render('Messages/MessagesIndex', [
             'conversations' => $conversations,
+            'firstConversationMessages' => $firstConversationMessages,
         ]);
     }
 
@@ -88,11 +87,20 @@ class ConversationController extends Controller
         return $this->index();
     }
 
-    public function show($id)
+    public function show(GetParticipantMessages $request, $id = null)
     {
+        $user = User::find(Auth::user()->id);
+        $conversations = Chat::conversations()->setParticipant($user)->isDirect()->get();
+
+        // Fetch the messages for the first conversation
+        $firstConversationMessages = []; // Fetch this data accordingly
+
         $conversation = Chat::conversations()->getById($id);
 
-        return $this->itemResponse($conversation);
+        return Inertia::render('Messages/MessagesIndex', [
+            'conversations' => $conversations,
+            'conversation' => $conversation,
+        ]);
     }
 
     public function update(UpdateConversation $request, $id)
