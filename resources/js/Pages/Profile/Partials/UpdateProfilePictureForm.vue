@@ -22,7 +22,7 @@ const renderAvatar = (e) => publicAvatar = URL.createObjectURL(e.target.files[0]
                     <img :src="publicAvatar" class="border border-black-500 rounded-full w-24 h-24 mb-4" />
                     <input type="file" @input="form.avatar = $event.target.files[0]; renderAvatar($event);" />
                     <progress v-if="form.progress" :value="form.progress.percentage" max="100">
-                    {{ form.progress.percentage }}%
+                        {{ form.progress.percentage }}%
                     </progress>
                     <img v-if="url" :src="url" class="w-full mt-4 h-80" />
                     <div v-if="form.errors.image" class="font-bold text-red-600">
@@ -43,9 +43,3 @@ const renderAvatar = (e) => publicAvatar = URL.createObjectURL(e.target.files[0]
         </form>
     </section>
 </template>
-
-<style>
-body {
-    background-color: black;
-}
-</style>

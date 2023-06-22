@@ -103,7 +103,7 @@ const textareaInput = (e) => {
             </section>
 
             <section class="lg:w-7/12 w-11/12 border-x border-gray-800 relative">
-                <div class="bg-black bg-opacity-50 backdrop-blur-md z-10 absolute w-full">
+                <div class="bg-[#051239] bg-opacity-50 backdrop-blur-md z-10 absolute w-full">
                     <div class="border-gray-800 border-b w-full">
                         <div class="w-full text-white text-[22px] font-extrabold p-4">
                             {{ title }}
@@ -146,8 +146,8 @@ const textareaInput = (e) => {
     </div>
 
     <div id="OverlaySection" v-if="createPost"
-        class="fixed top-0 left-0 w-full h-screen bg-black md:bg-gray-400 md:bg-opacity-30 md:p-3">
-        <div class="md:max-w-2xl md:mx-auto md:mt-10 md:rounded-xl bg-black">
+        class="fixed top-0 left-0 w-full h-screen bg-[#051239] md:bg-gray-400 md:bg-opacity-30 md:p-3">
+        <div class="md:max-w-2xl md:mx-auto md:mt-10 md:rounded-xl bg-[#051239]">
 
             <div class=" flex items-center justify-between md:inline-block p-2 m-2 rounded-full cursor-pointer">
                 <div @click="closeMessageBox()" class="hover:bg-gray-800 inline-block p-2 rounded-full cursor-pointer">
@@ -169,7 +169,7 @@ const textareaInput = (e) => {
                         <textarea ref="textarea" :oninput="textareaInput" v-model="post" placeholder="What's happening?"
                             cols="30" rows="4" class="
                                 w-full
-                                bg-black
+                                bg-[#051239]
                                 border-0
                                 mt-2
                                 focus:ring-0

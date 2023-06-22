@@ -82,9 +82,3 @@ const iconClickHandler = () => {
         </template>
     </DiaryLayout>
 </template>
-
-<style>
-body {
-    background-color: black;
-}
-</style>

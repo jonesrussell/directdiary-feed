@@ -33,15 +33,8 @@ const form = useForm({
             <div>
                 <InputLabel for="firstname" value="First name" />
 
-                <TextInput
-                    id="firstname"
-                    type="text"
-                    class="mt-1 block w-full"
-                    v-model="form.firstname"
-                    required
-                    autofocus
-                    autocomplete="firstname"
-                />
+                <TextInput id="firstname" type="text" class="mt-1 block w-full" v-model="form.firstname" required autofocus
+                    autocomplete="firstname" />
 
                 <InputError class="mt-2" :message="form.errors.firstname" />
             </div>
@@ -49,14 +42,8 @@ const form = useForm({
             <div>
                 <InputLabel for="lastname" value="Last name" />
 
-                <TextInput
-                    id="lastname"
-                    type="text"
-                    class="mt-1 block w-full"
-                    v-model="form.lastname"
-                    required
-                    autocomplete="lastname"
-                />
+                <TextInput id="lastname" type="text" class="mt-1 block w-full" v-model="form.lastname" required
+                    autocomplete="lastname" />
 
                 <InputError class="mt-2" :message="form.errors.lastname" />
             </div>
@@ -64,14 +51,8 @@ const form = useForm({
             <div>
                 <InputLabel for="email" value="Email" />
 
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autocomplete="email"
-                />
+                <TextInput id="email" type="email" class="mt-1 block w-full" v-model="form.email" required
+                    autocomplete="email" />
 
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
@@ -79,20 +60,13 @@ const form = useForm({
             <div v-if="props.mustVerifyEmail && user.email_verified_at === null">
                 <p class="text-sm mt-2 text-gray-800">
                     Your email address is unverified.
-                    <Link
-                        :href="route('verification.send')"
-                        method="post"
-                        as="button"
-                        class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                        Click here to re-send the verification email.
+                    <Link :href="route('verification.send')" method="post" as="button"
+                        class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Click here to re-send the verification email.
                     </Link>
                 </p>
 
-                <div
-                    v-show="props.status === 'verification-link-sent'"
-                    class="mt-2 font-medium text-sm text-green-600"
-                >
+                <div v-show="props.status === 'verification-link-sent'" class="mt-2 font-medium text-sm text-green-600">
                     A new verification link has been sent to your email address.
                 </div>
             </div>
@@ -107,9 +81,3 @@ const form = useForm({
         </form>
     </section>
 </template>
-
-<style>
-body {
-    background-color: black;
-}
-</style>

@@ -42,7 +42,7 @@ let lastMessage = "Last message goes here.";
                         <DotsHorizontal @click="openOptions = !openOptions" />
                     </button>
                     <div v-if="openOptions"
-                        class="absolute mt-1 right-0 w-[300px] bg-black border border-gray-700 rounded-lg shadow-lg">
+                        class="absolute mt-1 right-0 w-[300px] bg-[#051239] border border-gray-700 rounded-lg shadow-lg">
                         <ul class="p-3">
                             <Link as="button" method="delete" :href="route('conversations.destroy', {
                                 id: conversation.id,
