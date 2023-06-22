@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import { usePage } from '@inertiajs/vue3';
 
@@ -7,12 +6,13 @@ let pageProps = usePage().props;
 
 const props = defineProps({
     conversationId: Number,
-    messages: Array
+    messages: Array,
+    otherUser: Array,
 });
 
 let form = useForm({
     participant_id: pageProps.auth.user.id,
-    participant_type: 'App\\Models\\User',  // Replace with your user model namespace
+    participant_type: 'App\\Models\\User',
     message: {
         body: '',
     },
@@ -27,9 +27,14 @@ const sendMessage = () => {
 
 <template>
     <div class="m-4 text-white">
-        <h1 class="text-xl font-bold mb-4">Conversation</h1>
+        <h1 class="text-xl font-bold mb-4">{{ otherUser.firstname }} {{ otherUser.lastname }}</h1>
         <div v-for="message in messages" :key="message.id">
-            {{ message.body }}
+            <div v-if="message.sender.id === otherUser.id" class="text-left">
+                {{ message.body }}
+            </div>
+            <div v-if="message.sender.id !== otherUser.id" class="text-right">
+                {{ message.body }}
+            </div>
         </div>
 
         <div class="mt-4">

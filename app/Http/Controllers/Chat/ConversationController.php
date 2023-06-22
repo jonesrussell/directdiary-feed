@@ -92,12 +92,12 @@ class ConversationController extends Controller
         $user = User::find(Auth::user()->id);
         $conversations = Chat::conversations()->setParticipant($user)->isDirect()->get();
 
-        // Fetch the messages for the first conversation
-        $firstConversationMessages = []; // Fetch this data accordingly
-
         $conversation = Chat::conversations()->getById($id);
-
         $participants = $conversation->getParticipants();
+
+        $otherUser = $participants->filter(function ($participant) use ($user) {
+            return $participant->id !== $user->id;
+        })->first();
 
         $messages = Chat::conversation($conversation)->setParticipant($participants->first())->getMessages();
 
@@ -106,8 +106,10 @@ class ConversationController extends Controller
             'conversation' => $conversation,
             'conversationId' => $id,
             'messages' => $messages,
+            'otherUser' => $otherUser,
         ]);
     }
+
 
     public function update(UpdateConversation $request, $id)
     {

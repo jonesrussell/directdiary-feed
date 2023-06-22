@@ -10,23 +10,13 @@ const authUser = page.props.auth.user;
 
 let props = defineProps({
     conversations: Array,
-    conversation: Array,
+    conversation: Array | null,
     conversationId: Number | null,
+    otherUser: Array,
     messages: Array,
 });
 
-console.log('conversationId', props.conversationId);
-
-let selectedConversation = ref(props.conversations.data[0]) ?? null;
-console.log('selectedConversation', selectedConversation);
-
-let foo = props.conversation.data;
-console.log('foo', foo[0] ?? []);
-
-console.log('messages', props.messages);
-
-let selectedMessages = ref(props.conversation.data[0]) ?? null;
-console.log('selectedMessages', selectedMessages);
+console.log('otherUser', props.otherUser);
 </script>
 
 <template>
@@ -44,7 +34,7 @@ console.log('selectedMessages', selectedMessages);
                 <div class="border-b border-b-gray-800 mt-2"></div>
             </div>
             <div v-if="conversationId">
-                <Messages :conversationId="conversationId" :messages="messages.data" />
+                <Messages :conversationId="conversationId" :messages="messages.data" :otherUser="otherUser" />
             </div>
         </div>
     </DiaryLayout>
