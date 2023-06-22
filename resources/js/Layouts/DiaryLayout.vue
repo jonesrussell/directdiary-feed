@@ -12,7 +12,7 @@ const props = defineProps({
     showForYouFollowing: Boolean,
     showProfileTabs: Boolean,
     thirdSectionComponent: Object,
-    conversationId: Number | null, // add this
+    conversationId: Number | null,
 });
 
 const page = usePage();
@@ -82,7 +82,6 @@ const textareaInput = (e) => {
                 <MenuItem iconString="Explore" />
                 </Link>
 
-                <MenuItem iconString="Notifications" v-if="authUser" />
                 <Link
                     :href="`/messages?participant_id=${authUser.id}&participant_type=${encodeURIComponent('\\App\\Models\\User')}`">
                 <MenuItem iconString="Messages" v-if="authUser" />
@@ -102,7 +101,7 @@ const textareaInput = (e) => {
                 </button>
             </section>
 
-            <section class="lg:w-7/12 w-11/12 border-x border-gray-800 relative">
+            <section class="lg:w-9/12 w-11/12 border-x border-gray-800 relative">
                 <div class="bg-[#051239] bg-opacity-50 backdrop-blur-md z-10 absolute w-full">
                     <div class="border-gray-800 border-b w-full">
                         <div class="w-full text-white text-[22px] font-extrabold p-4">
