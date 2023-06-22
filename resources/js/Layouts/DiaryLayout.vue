@@ -130,11 +130,6 @@ const textareaInput = (e) => {
                     <slot />
                     <div class="pb-4"></div>
                 </div>
-
-            </section>
-
-            <section class="lg:block hidden lg:w-4/12 h-screen border-l border-gray-800 pl-4">
-                <component :is="thirdSectionComponent" v-bind="$props" />
             </section>
         </div>
         <footer v-if="!authUser"

@@ -50,12 +50,12 @@ class ConversationController extends Controller
 
         // Fetch the messages for the first conversation
         $firstConversationMessages = []; // Fetch this data accordingly
-        if ($conversationId) {
-            $firstConversationMessages = ['foo']; // Fetch this data accordingly
-        }
 
         return Inertia::render('Messages/MessagesIndex', [
             'conversations' => $conversations,
+            'conversation' => [
+                'data' => [],
+            ],
             'firstConversationMessages' => $firstConversationMessages,
         ]);
     }
@@ -97,9 +97,15 @@ class ConversationController extends Controller
 
         $conversation = Chat::conversations()->getById($id);
 
+        $participants = $conversation->getParticipants();
+
+        $messages = Chat::conversation($conversation)->setParticipant($participants->first())->getMessages();
+
         return Inertia::render('Messages/MessagesIndex', [
             'conversations' => $conversations,
             'conversation' => $conversation,
+            'conversationId' => $id,
+            'messages' => $messages,
         ]);
     }
 

@@ -75,18 +75,22 @@ class ConversationMessageController extends Controller
     /**
      * @param  \Musonza\Chat\Http\Requests\StoreMessage  $request
      * @param                                            $conversationId
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
-    public function store(StoreMessage $request, $conversationId): \Illuminate\Http\Response | \Illuminate\Http\JsonResponse | \Illuminate\Contracts\Foundation\Application | \Illuminate\Contracts\Routing\ResponseFactory
+    public function store(StoreMessage $request, $conversationId)
     {
+        logger('store message');
+        $participant = $request->getParticipant();
         $conversation = Chat::conversations()->getById($conversationId);
         $message      = Chat::message($request->getMessageBody())
-            ->from($request->getParticipant())
+            ->from($participant)
             ->to($conversation)
             ->send();
 
-        return $this->itemResponse($message);
+        $participant_id = $participant->id;
+        $participant_type = 'App\\Models\\User';
+        return to_route('conversations.show', [
+            $conversationId, "participant_id={$participant_id}", "participant_type={$participant_type}",
+        ]);
     }
 
     public function deleteAll(ClearConversation $request, $conversationId)
