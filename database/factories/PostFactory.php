@@ -9,7 +9,7 @@ use Carbon\Carbon;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Post>
  */
-class DomainFactory extends Factory
+class PostFactory extends Factory
 {
     /**
      * Define the model's default state.
