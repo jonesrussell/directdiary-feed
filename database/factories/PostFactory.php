@@ -1,6 +1,6 @@
 <?php
 
-namespace Database\Factories\Domain;
+namespace Database\Factories;
 
 use App\Enums\DomainApproval;
 use Illuminate\Database\Eloquent\Factories\Factory;
