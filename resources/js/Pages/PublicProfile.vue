@@ -5,31 +5,39 @@ import Post from '@/Components/Post.vue';
 import EmailOutline from 'vue-material-design-icons/EmailOutline.vue';
 import { useForm } from '@inertiajs/vue3';
 
-const props = defineProps({ profile: Array, view: String });
+// Change the prop type to Object
+const props = defineProps({ profile: Object, view: String });
 
 const page = usePage();
-let authUserId = page.props.auth.user.id;
+let authUserId = page.props.auth.user?.id ?? null;
+
+// Use optional chaining to safely access properties
 console.log(props.profile?.id);
 
-let username = props.profile?.username;
-let fullname = `${props.profile?.firstname} ${props.profile?.lastname}`
-let posts = props.profile?.posts;
-let domains = props.profile?.domains;
-let profileUrl = `/${username}`
-let profileDomainsUrl = `/${username}/domains`
+let username = props.profile?.username ?? '';
+let fullname = props.profile ? `${props.profile.firstname} ${props.profile.lastname}` : '';
+let posts = props.profile?.posts ?? [];
+let domains = props.profile?.domains ?? [];
+let profileUrl = `/${username}`;
+let profileDomainsUrl = `/${username}/domains`;
 
 // Define the form data
 const messageForm = useForm({
     participants: [
         { id: authUserId, type: '\\App\\Models\\User' },
-        { id: props.profile?.id, type: '\\App\\Models\\User' },
-    ],
+        { id: props.profile?.id ?? null, type: '\\App\\Models\\User' },
+    ].filter(participant => participant.id !== null),
 });
 
 // Define the click handler
 const iconClickHandler = () => {
     console.log('clicked message icon');
-    messageForm.post('/messages');
+    if (authUserId && props.profile?.id) {
+        messageForm.post('/messages');
+    } else {
+        console.log('Cannot send message: User not authenticated or profile not loaded');
+        // You might want to show an error message to the user here
+    }
 };
 </script>
 

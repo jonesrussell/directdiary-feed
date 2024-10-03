@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { router, usePage, Link } from '@inertiajs/vue3';
 import Feather from 'vue-material-design-icons/Feather.vue';
 import Close from 'vue-material-design-icons/Close.vue';
@@ -16,7 +16,7 @@ const props = defineProps({
 });
 
 const page = usePage();
-let authUser = page.props.auth.user;
+const user = computed(() => page.props.auth.user);
 
 let title = props.title;
 let showForYouFollowing = props.showForYouFollowing;
@@ -75,24 +75,22 @@ const textareaInput = (e) => {
                     <img class="rounded-full mt-3 w-full" width="50" src="/img/leo-logo.png" />
                 </div>
 
-                <Link href="/" v-if="authUser">
-                <MenuItem iconString="Home" />
+                <Link href="/" v-if="user">
+                    <MenuItem iconString="Home" />
                 </Link>
                 <Link href="/explore">
-                <MenuItem iconString="Explore" />
+                    <MenuItem iconString="Explore" />
                 </Link>
 
-                <Link
-                    :href="`/messages?participant_id=${authUser.id}&participant_type=${encodeURIComponent('\\App\\Models\\User')}`">
-                <MenuItem iconString="Messages" v-if="authUser" />
+                <Link v-if="user" :href="`/messages?participant_id=${user.id}&participant_type=${encodeURIComponent('\\App\\Models\\User')}`">
+                    <MenuItem iconString="Messages" />
                 </Link>
 
-
-                <Link href="/profile">
-                <MenuItem iconString="Profile" v-if="authUser" />
+                <Link v-if="user" href="/profile">
+                    <MenuItem iconString="Profile" />
                 </Link>
 
-                <button v-if="authUser" @click="createPost = true"
+                <button v-if="user" @click="createPost = true"
                     class="lg:w-full mt-8 ml-2 text-white font-extrabold text-[22px] bg-[#1C9CEF] p-3 px-3 rounded-full cursor-pointer">
                     <span class="lg:block hidden">Post</span>
                     <span class="block lg:hidden">
@@ -131,15 +129,15 @@ const textareaInput = (e) => {
                 </div>
             </section>
         </div>
-        <footer v-if="!authUser"
+        <footer v-if="!user"
             class="absolute text-white bottom-0 w-full bg-red-400 h-20 flex space-x-4 justify-center items-center">
             <Link href="/login"
                 class="px-4 py-2 border text-white hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            Log in
+                Log in
             </Link>
             <Link href="/register"
                 class="px-4 py-2 border text-gray-800 bg-white hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-            Sign up
+                Sign up
             </Link>
         </footer>
     </div>
