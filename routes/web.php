@@ -22,8 +22,14 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
+    if (auth()->check()) {
+        return redirect('/home');
+    }
+    return Inertia::render('Welcome');
+})->middleware('guest')->name('welcome');
+
+Route::get('/home', function () {
     return Inertia::render('Home');
 })->middleware(['auth', 'verified'])->name('home');
 
@@ -31,10 +37,6 @@ Route::post('/posts', [\App\Http\Controllers\PostController::class, 'store'])->n
 Route::delete('/posts/{id}', [\App\Http\Controllers\PostController::class, 'destroy'])->name('posts.destroy');
 
 Route::get('/explore', [ExploreController::class, 'index'])->name('explore.index');
-
-/*Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');*/
 
 Route::middleware('auth')->group(function () {
     Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -58,3 +60,6 @@ require __DIR__ . '/auth.php';
 
 Route::get('{username}', [PublicProfileController::class, 'show']);
 Route::get('{username}/domains', [PublicProfileController::class, 'domains']);
+
+// Remove or comment out this line if it exists
+// Route::redirect('/', '/home')->middleware('auth');

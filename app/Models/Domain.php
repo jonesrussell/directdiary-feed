@@ -3,16 +3,16 @@
 namespace App\Models;
 
 use App\Enums\DomainApproval;
-use App\Enums\DomainStatus;
-use App\Models\Negotiation\PriceRequest;
+// use App\Enums\DomainStatus;
+// use App\Models\Negotiation\PriceRequest;
 use App\Models\User;
 use App\Models\Service;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\Relation;
+// use Illuminate\Database\Eloquent\Relations\HasMany;
+// use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
 use Musonza\Chat\Traits\Messageable;
@@ -55,7 +55,7 @@ class Domain extends Model
         'price' => 'integer',
         'user_id' => 'integer',
         'approval' => DomainApproval::class,
-        'status' => DomainStatus::class,
+        // 'status' => DomainStatus::class,
     ];
 
     /**
@@ -122,10 +122,10 @@ class Domain extends Model
         ];
     }
 
-    public function priceRequests(): HasMany
-    {
-        return $this->hasMany(PriceRequest::class);
-    }
+    // public function priceRequests(): HasMany
+    // {
+    //     return $this->hasMany(PriceRequest::class);
+    // }
 
     public function services()
     {
