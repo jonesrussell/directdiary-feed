@@ -1,4 +1,3 @@
-version: '3.6'
 services:
   meilisearch:
     container_name: ddev-${DDEV_SITENAME}-meilisearch
