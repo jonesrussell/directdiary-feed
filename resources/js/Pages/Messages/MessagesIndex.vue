@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from 'vue';
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import Conversation from '@/Components/Conversation.vue'
 import DiaryLayout from '@/Layouts/DiaryLayout.vue';

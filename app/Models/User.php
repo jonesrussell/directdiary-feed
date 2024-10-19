@@ -24,7 +24,7 @@ class User extends Authenticatable implements HasMedia
      *
      * @var array
      */
-    protected $appends = ['avatar'];
+    protected $appends = ['avatar', 'full_name'];
 
     /**
      * The attributes that are mass assignable.
@@ -64,12 +64,22 @@ class User extends Authenticatable implements HasMedia
     ];
 
     /**
+     * Get the user's full name.
+     */
+    protected function fullName(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => "{$this->firstname} {$this->lastname}",
+        );
+    }
+
+    /**
      * Return a user's avatar url.
      */
     protected function avatar(): Attribute
     {
         return new Attribute(
-            get: fn () => $this->getFirstMedia('avatar')['original_url']
+            get: fn () => $this->getFirstMedia('avatar')?->getUrl()
                 ?? "https://ui-avatars.com/api/?name={$this->firstname}+{$this->lastname}",
         );
     }

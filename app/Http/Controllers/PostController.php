@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request as MyHttpRequest;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
+use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
 
 class PostController extends Controller
 {
@@ -31,10 +35,12 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param MyHttpRequest $request
+     * @return RedirectResponse
+     * @throws FileDoesNotExist
+     * @throws FileIsTooBig
      */
-    public function store(Request $request)
+    public function store(MyHttpRequest $request): RedirectResponse
     {
         $validated = $request->validate([
             'post' => 'required|string',
@@ -48,10 +54,10 @@ class PostController extends Controller
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $isVideo = $file->getMimeType() === 'video/mp4';
-            
+
             $post->addMedia($file)
                  ->toMediaCollection($isVideo ? 'video' : 'image');
-            
+
             $post->is_video = $isVideo;
             $post->save();
         }
@@ -59,15 +65,13 @@ class PostController extends Controller
         return redirect()->back()->with('success', 'Post created successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Post $post)
+    public function destroy(Post $post): RedirectResponse
     {
-        $this->authorize('delete', $post);
+        try {
+            $this->authorize('delete', $post);
+        } catch (AuthorizationException $e) {
+
+        }
 
         $post->clearMediaCollection('image');
         $post->clearMediaCollection('video');

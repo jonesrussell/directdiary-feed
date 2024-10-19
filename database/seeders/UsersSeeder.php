@@ -63,7 +63,7 @@ class UsersSeeder extends Seeder
 
         while ($additionalUsers->count() < $count) {
             $user = User::factory()->make();
-            
+
             // Generate a unique username
             do {
                 $username = Str::lower(Str::random(8));
@@ -81,12 +81,12 @@ class UsersSeeder extends Seeder
         }
 
         // Insert all additional users at once
-        User::insert($additionalUsers->map->getAttributes()->toArray());
+        (new \App\Models\User)->insert($additionalUsers->map->getAttributes()->toArray());
     }
 
-    private function createUser(array $data)
+    private function createUser(array $data): void
     {
-        User::create([
+        (new \App\Models\User)->create([
             'firstname' => $data['firstname'],
             'lastname' => $data['lastname'],
             'username' => $data['username'],

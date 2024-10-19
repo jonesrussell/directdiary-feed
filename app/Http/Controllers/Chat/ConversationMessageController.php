@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Chat;
 
 use App\Http\Controllers\Controller;
 use Chat;
-use Inertia\Inertia;
+use Illuminate\Http\RedirectResponse;
+use Inertia\{Inertia, Response as IResponse};
 use Musonza\Chat\Http\Requests\ClearConversation;
 use Musonza\Chat\Http\Requests\DeleteMessage;
 use Musonza\Chat\Http\Requests\GetParticipantMessages;
@@ -19,7 +20,7 @@ class ConversationMessageController extends Controller
         $this->setUp();
     }
 
-    private function setUp()
+    private function setUp(): void
     {
         if ($messageTransformer = config('musonza_chat.transformers.message')) {
             $this->messageTransformer = app($messageTransformer);
@@ -36,7 +37,7 @@ class ConversationMessageController extends Controller
         return response($message);
     }
 
-    public function index(GetParticipantMessages $request, $conversationId)
+    public function index(GetParticipantMessages $request, $conversationId): IResponse
     {
         logger('index');
         $conversation = Chat::conversations()->getById($conversationId);
@@ -64,7 +65,7 @@ class ConversationMessageController extends Controller
         ]);
     }
 
-    public function show(GetParticipantMessages $request, $conversationId, $messageId)
+    public function show(GetParticipantMessages $request, $conversationId, $messageId): \Illuminate\Foundation\Application|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         logger('show');
         $message = Chat::messages()->getById($messageId);
@@ -73,18 +74,20 @@ class ConversationMessageController extends Controller
     }
 
     /**
-     * @param  \Musonza\Chat\Http\Requests\StoreMessage  $request
+     * @param StoreMessage $request
      * @param                                            $conversationId
+     * @return RedirectResponse
+     * @throws \Exception
      */
-    public function store(StoreMessage $request, $conversationId)
+    public function store(StoreMessage $request, $conversationId): RedirectResponse
     {
         logger('store message');
         $participant = $request->getParticipant();
         $conversation = Chat::conversations()->getById($conversationId);
         $message      = Chat::message($request->getMessageBody())
             ->from($participant)
-            ->to($conversation)
-            ->send();
+            ->to($conversation);
+        $message->send();
 
         $participant_id = $participant->id;
         $participant_type = 'App\\Models\\User';
@@ -93,7 +96,7 @@ class ConversationMessageController extends Controller
         ]);
     }
 
-    public function deleteAll(ClearConversation $request, $conversationId)
+    public function deleteAll(ClearConversation $request, $conversationId): \Illuminate\Foundation\Application|\Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $conversation = Chat::conversations()->getById($conversationId);
         Chat::conversation($conversation)
@@ -103,7 +106,7 @@ class ConversationMessageController extends Controller
         return response('');
     }
 
-    public function destroy(DeleteMessage $request, $conversationId, $messageId)
+    public function destroy(DeleteMessage $request, $conversationId, $messageId): \Illuminate\Foundation\Application|\Illuminate\Http\Response|\Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\ResponseFactory
     {
         $message = Chat::messages()->getById($messageId);
         Chat::message($message)
