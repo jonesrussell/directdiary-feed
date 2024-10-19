@@ -21,17 +21,23 @@ class RegistrationTest extends TestCase
     public function test_new_users_can_register(): void
     {
         $email = 'test' . Str::random() . '@example.com';
+        $username = 'testuser' . Str::random(5);
 
         $response = $this->post('/register', [
-            'name' => 'Test User',
+            'firstname' => 'Test',
+            'lastname' => 'User',
             'email' => $email,
+            'username' => $username,
             'password' => 'password',
             'password_confirmation' => 'password',
         ]);
 
         $this->assertAuthenticated();
         $this->assertDatabaseHas('users', [
+            'firstname' => 'Test',
+            'lastname' => 'User',
             'email' => $email,
+            'username' => $username,
         ]);
         $response->assertRedirect('https://directdiary-feed.ddev.site/home');
     }

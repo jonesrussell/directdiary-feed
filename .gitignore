@@ -21,3 +21,4 @@ yarn-error.log
 *.sql
 *.gz
 phpunit.xml.bak
+.phpunit.cache/test-results
