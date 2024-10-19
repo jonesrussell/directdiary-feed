@@ -1,47 +1,39 @@
 <?php
 
-namespace Tests\Feature\Auth;
-
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
 use Illuminate\Support\Str;
 use Inertia\Testing\AssertableInertia as Assert;
 
-class RegistrationTest extends TestCase
-{
-    use RefreshDatabase;
 
-    public function test_registration_screen_can_be_rendered(): void
-    {
-        $response = $this->get('/register');
+uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
 
-        $response->assertStatus(200);
-        $response->assertInertia(fn (Assert $page) => $page
-            ->component('Auth/Register')
-        );
-    }
+test('registration screen can be rendered', function () {
+    $response = $this->get('/register');
 
-    public function test_new_users_can_register(): void
-    {
-        $email = 'test' . Str::random() . '@example.com';
-        $username = 'testuser' . Str::random(5);
+    $response->assertStatus(200);
+    $response->assertInertia(fn (Assert $page) => $page
+        ->component('Auth/Register')
+    );
+});
 
-        $response = $this->post('/register', [
-            'firstname' => 'Test',
-            'lastname' => 'User',
-            'email' => $email,
-            'username' => $username,
-            'password' => 'password',
-            'password_confirmation' => 'password',
-        ]);
+test('new users can register', function () {
+    $email = 'test' . Str::random() . '@example.com';
+    $username = 'testuser' . Str::random(5);
 
-        $this->assertAuthenticated();
-        $this->assertDatabaseHas('users', [
-            'firstname' => 'Test',
-            'lastname' => 'User',
-            'email' => $email,
-            'username' => $username,
-        ]);
-        $response->assertRedirect('https://directdiary-feed.ddev.site/home');
-    }
-}
+    $response = $this->post('/register', [
+        'firstname' => 'Test',
+        'lastname' => 'User',
+        'email' => $email,
+        'username' => $username,
+        'password' => 'password',
+        'password_confirmation' => 'password',
+    ]);
+
+    $this->assertAuthenticated();
+    $this->assertDatabaseHas('users', [
+        'firstname' => 'Test',
+        'lastname' => 'User',
+        'email' => $email,
+        'username' => $username,
+    ]);
+    $response->assertRedirect('https://directdiary-feed.ddev.site/home');
+});
