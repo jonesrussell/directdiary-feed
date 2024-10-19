@@ -35,5 +35,5 @@ test('new users can register', function () {
         'email' => $email,
         'username' => $username,
     ]);
-    $response->assertRedirect('https://directdiary-feed.ddev.site/home');
+    $response->assertRedirect('/home');
 });
