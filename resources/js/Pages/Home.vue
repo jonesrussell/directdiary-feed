@@ -1,6 +1,5 @@
 <script setup>
-import { ref } from 'vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 import Post from '@/Components/Post.vue'
 import DiaryLayout from '@/Layouts/DiaryLayout.vue';
 

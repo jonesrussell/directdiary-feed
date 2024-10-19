@@ -18,19 +18,19 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'firstname' => $this->faker->firstName(),
-            'lastname' => $this->faker->lastName(),
-            'username' => $this->faker->unique()->userName(),
-            'email' => $this->faker->unique()->safeEmail(),
+            'firstname' => fake()->firstName,
+            'lastname' => fake()->lastName,
+            'username' => fake()->unique()->userName,
+            'email' => fake()->unique()->safeEmail,
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
-            'biography' => $this->faker->paragraph(),
-            'facebook_link' => $this->faker->url(),
-            'twitter_link' => $this->faker->url(),
-            'instagram_link' => $this->faker->url(),
-            'linkedin_link' => $this->faker->url(),
-            'dns_verify_token' => $this->faker->uuid,
+            'biography' => fake()->paragraph(),
+            'facebook_link' => fake()->url(),
+            'twitter_link' => fake()->url(),
+            'instagram_link' => fake()->url(),
+            'linkedin_link' => fake()->url(),
+            'dns_verify_token' => fake()->uuid,
         ];
     }
 

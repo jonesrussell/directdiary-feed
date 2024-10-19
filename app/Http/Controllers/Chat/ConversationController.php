@@ -27,7 +27,7 @@ class ConversationController extends Controller
         $this->setUp();
     }
 
-    private function setUp()
+    private function setUp(): void
     {
         if ($conversationTransformer = config('musonza_chat.transformers.conversation')) {
             $this->conversationTransformer = app($conversationTransformer);
@@ -43,9 +43,10 @@ class ConversationController extends Controller
         return response($conversation);
     }
 
-    public function index()
+    public function index(): \Inertia\Response
     {
-        $user = User::find(Auth::user()->id);
+        $id = auth()->id();
+        $user = (new \App\Models\User)->find($id);
         $conversations = Chat::conversations()->setParticipant($user)->isDirect()->get();
 
         // Fetch the messages for the first conversation
@@ -65,7 +66,7 @@ class ConversationController extends Controller
      */
     public function store(StoreConversationRequest $request)
     {
-        $user = User::find(Auth::user()->id);
+        $user = (new \App\Models\User)->find(auth()->id());
         $conversations = Chat::conversations()->setParticipant($user)->isDirect()->get();
 
         $participants = $request->participants();
@@ -87,9 +88,9 @@ class ConversationController extends Controller
         return $this->index();
     }
 
-    public function show(GetParticipantMessages $request, $id = null)
+    public function show(GetParticipantMessages $request, $id = null): \Inertia\Response
     {
-        $user = User::find(Auth::user()->id);
+        $user = (new \App\Models\User)->find(auth()->id());
         $conversations = Chat::conversations()->setParticipant($user)->isDirect()->get();
 
         $conversation = Chat::conversations()->getById($id);
@@ -111,7 +112,7 @@ class ConversationController extends Controller
     }
 
 
-    public function update(UpdateConversation $request, $id)
+    public function update(UpdateConversation $request, $id): void
     {
         /** @var Conversation $conversation */
         // $conversation = Chat::conversations()->getById($id);
@@ -128,7 +129,7 @@ class ConversationController extends Controller
      * @throws Exception
      *
      */
-    public function destroy(DestroyConversation $request, $id)
+    public function destroy(DestroyConversation $request, $id): Response|ResponseFactory
     {
         /** @var Conversation $conversation */
         // $conversation = Chat::conversations()->getById($id);

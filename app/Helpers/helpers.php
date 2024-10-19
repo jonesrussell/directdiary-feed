@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 if (!function_exists('top_level_domains')) {
     /**
      * Returns list of top level domains.
+     *
+     * @return array<string, string>
      */
-    function top_level_domains()
-    : array
+    function top_level_domains(): array
     {
         return [
             'aero'   => 'air-transport industry',
@@ -14,6 +17,8 @@ if (!function_exists('top_level_domains')) {
             'cat'    => 'Catalan',
             'com'    => 'commercial',
             'coop'   => 'cooperatives',
+            'edu'    => 'education',
+            'gov'    => 'government',
             'info'   => 'information',
             'int'    => 'international organizations',
             'jobs'   => 'companies',
