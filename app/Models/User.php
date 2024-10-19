@@ -24,7 +24,7 @@ class User extends Authenticatable implements HasMedia
      *
      * @var array
      */
-    protected $appends = ['avatar', 'fullName'];
+    protected $appends = ['avatar', 'full_name'];
 
     /**
      * The attributes that are mass assignable.
@@ -68,7 +68,7 @@ class User extends Authenticatable implements HasMedia
      */
     protected function fullName(): Attribute
     {
-        return new Attribute(
+        return Attribute::make(
             get: fn () => "{$this->firstname} {$this->lastname}",
         );
     }

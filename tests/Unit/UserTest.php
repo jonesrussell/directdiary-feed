@@ -10,7 +10,7 @@ test('user full name is correct', function () {
         'lastname' => 'Doe'
     ]);
     
-    expect($user->fullName)->toBe('John Doe');
+    expect($user->full_name)->toBe('John Doe');
 });
 
 test('user avatar url is generated correctly', function () {
