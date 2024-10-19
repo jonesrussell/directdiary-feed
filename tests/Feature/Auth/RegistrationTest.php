@@ -2,9 +2,9 @@
 
 namespace Tests\Feature\Auth;
 
-use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Illuminate\Support\Str;
 
 class RegistrationTest extends TestCase
 {
@@ -15,18 +15,24 @@ class RegistrationTest extends TestCase
         $response = $this->get('/register');
 
         $response->assertStatus(200);
+        $response->assertInertia()->component('Auth/Register');
     }
 
     public function test_new_users_can_register(): void
     {
+        $email = 'test' . Str::random() . '@example.com';
+
         $response = $this->post('/register', [
             'name' => 'Test User',
-            'email' => 'test@example.com',
+            'email' => $email,
             'password' => 'password',
             'password_confirmation' => 'password',
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(RouteServiceProvider::HOME);
+        $this->assertDatabaseHas('users', [
+            'email' => $email,
+        ]);
+        $response->assertRedirect('https://directdiary-feed.ddev.site/home');
     }
 }

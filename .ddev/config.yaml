@@ -17,6 +17,9 @@ web_environment: []
 nodejs_version: "20"
 corepack_enable: false
 default_container_timeout: "240"
+hooks:
+  post-start:
+    - exec: mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS testing; GRANT ALL ON testing.* TO 'db'@'%';"
 
 # Key features of DDEV's config.yaml:
 
