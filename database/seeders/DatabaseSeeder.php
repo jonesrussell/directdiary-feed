@@ -12,11 +12,17 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
-        $this->call(UsersSeeder::class);
-        $this->call(PostsSeeder::class);
-        $this->call(ServicesTableSeeder::class);
-        $this->call(DomainSeeder::class);
+        if (app()->environment('testing')) {
+            $this->call(TestUserSeeder::class);
+        } else {
+            $this->call([
+                UsersSeeder::class,
+                PostsSeeder::class,
+                ServicesTableSeeder::class,
+                DomainSeeder::class,
+            ]);
+        }
     }
 }

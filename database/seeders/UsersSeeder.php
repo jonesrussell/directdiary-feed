@@ -26,7 +26,7 @@ class UsersSeeder extends Seeder
             'twitter_link' => 'https://twitter.com/' . $faker->userName,
             'instagram_link' => 'https://instagram.com/' . $faker->userName,
             'linkedin_link' => 'https://linkedin.com/in/' . $faker->userName,
-            'dns_verify_token' => Str::random(32), // Add this line
+            'dns_verify_token' => Str::random(32),
         ]);
 
         $this->createUser([
@@ -40,7 +40,7 @@ class UsersSeeder extends Seeder
             'twitter_link' => 'https://twitter.com/' . $faker->userName,
             'instagram_link' => 'https://instagram.com/' . $faker->userName,
             'linkedin_link' => 'https://linkedin.com/in/' . $faker->userName,
-            'dns_verify_token' => Str::random(32), // Add this line
+            'dns_verify_token' => Str::random(32),
         ]);
 
         $this->createUser([
@@ -54,20 +54,34 @@ class UsersSeeder extends Seeder
             'twitter_link' => 'https://twitter.com/' . $faker->userName,
             'instagram_link' => 'https://instagram.com/' . $faker->userName,
             'linkedin_link' => 'https://linkedin.com/in/' . $faker->userName,
-            'dns_verify_token' => Str::random(32), // Add this line
+            'dns_verify_token' => Str::random(32),
         ]);
 
-        // Create additional users
-        User::factory()->count(7)->create()->each(function ($user) use ($faker) {
-            $user->update([
-                'biography' => $faker->paragraph,
-                'facebook_link' => 'https://facebook.com/' . $faker->userName,
-                'twitter_link' => 'https://twitter.com/' . $faker->userName,
-                'instagram_link' => 'https://instagram.com/' . $faker->userName,
-                'linkedin_link' => 'https://linkedin.com/in/' . $faker->userName,
-                'dns_verify_token' => Str::random(32), // Add this line
-            ]);
-        });
+        // Create additional users with unique usernames
+        $additionalUsers = collect();
+        $count = 7;
+
+        while ($additionalUsers->count() < $count) {
+            $user = User::factory()->make();
+            
+            // Generate a unique username
+            do {
+                $username = Str::lower(Str::random(8));
+            } while (User::where('username', $username)->exists() || $additionalUsers->pluck('username')->contains($username));
+
+            $user->username = $username;
+            $user->biography = $faker->paragraph;
+            $user->facebook_link = 'https://facebook.com/' . $faker->userName;
+            $user->twitter_link = 'https://twitter.com/' . $faker->userName;
+            $user->instagram_link = 'https://instagram.com/' . $faker->userName;
+            $user->linkedin_link = 'https://linkedin.com/in/' . $faker->userName;
+            $user->dns_verify_token = Str::random(32);
+
+            $additionalUsers->push($user);
+        }
+
+        // Insert all additional users at once
+        User::insert($additionalUsers->map->getAttributes()->toArray());
     }
 
     private function createUser(array $data)
@@ -83,7 +97,7 @@ class UsersSeeder extends Seeder
             'twitter_link' => $data['twitter_link'],
             'instagram_link' => $data['instagram_link'],
             'linkedin_link' => $data['linkedin_link'],
-            'dns_verify_token' => $data['dns_verify_token'], // Add this line
+            'dns_verify_token' => $data['dns_verify_token'],
         ]);
     }
 }

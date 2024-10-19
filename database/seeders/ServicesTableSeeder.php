@@ -14,36 +14,24 @@ class ServicesTableSeeder extends Seeder
      */
     public function run()
     {
-        $services = [
-            [
-                'name' => 'Web Development',
-                'key' => 'web-development',
-                'description' => 'Web Development Services',
-            ],
-            [
-                'name' => 'Domaining',
-                'key' => 'domaining',
-                'description' => 'Domaining Services',
-            ],
-            [
-                'name' => 'Web Design',
-                'key' => 'web-design',
-                'description' => 'Web Design Services',
-            ],
-            [
-                'name' => 'Modeling',
-                'key' => 'modeling',
-                'description' => 'Modeling Services',
-            ],
-            [
-                'name' => 'Photography',
-                'key' => 'photography',
-                'description' => 'Photography services',
-            ],
+        // Create predefined services
+        $predefinedServices = [
+            ['name' => 'Web Development', 'key' => 'web-development'],
+            ['name' => 'Domaining', 'key' => 'domaining'],
+            ['name' => 'Web Design', 'key' => 'web-design'],
+            ['name' => 'Modeling', 'key' => 'modeling'],
+            ['name' => 'Photography', 'key' => 'photography'],
         ];
 
-        foreach ($services as $service) {
-            Service::create($service);
+        foreach ($predefinedServices as $service) {
+            Service::factory()->create([
+                'name' => $service['name'],
+                'key' => $service['key'],
+                'description' => $service['name'] . ' Services',
+            ]);
         }
+
+        // Create additional random services
+        Service::factory()->count(5)->create();
     }
 }

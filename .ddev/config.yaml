@@ -14,9 +14,12 @@ database:
 use_dns_when_possible: true
 composer_version: "2"
 web_environment: []
-nodejs_version: "18"
+nodejs_version: "20"
 corepack_enable: false
 default_container_timeout: "240"
+hooks:
+  post-start:
+    - exec: mysql -uroot -proot -e "CREATE DATABASE IF NOT EXISTS testing; GRANT ALL ON testing.* TO 'db'@'%';"
 
 # Key features of DDEV's config.yaml:
 
