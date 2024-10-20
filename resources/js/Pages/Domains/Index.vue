@@ -20,12 +20,6 @@ const submit = () => {
         onSuccess: () => form.reset('name'),
     });
 };
-
-const confirmDelete = (domain) => {
-    if (confirm(`Are you sure you want to delete ${domain.name}.${domain.extension}?`)) {
-        form.delete(route('domains.destroy', domain.id));
-    }
-};
 </script>
 
 <template>
@@ -96,7 +90,6 @@ const confirmDelete = (domain) => {
                                             method="delete" 
                                             as="button" 
                                             class="text-red-600 hover:text-red-900"
-                                            @click.prevent="confirmDelete(domain)"
                                         >
                                             Delete
                                         </Link>
