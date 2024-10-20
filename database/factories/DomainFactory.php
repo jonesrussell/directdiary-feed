@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
 use App\Models\Domain;
 use App\Enums\DomainApproval;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -22,15 +21,15 @@ class DomainFactory extends Factory
     public function definition(): array
     {
         $name = $this->faker->unique()->domainWord;
-        $extension = $this->faker->randomElement(['com', 'net', 'org', 'io', 'co', 'app']);
+        $extension = $this->faker->randomElement(array_keys(top_level_domains()));
 
         // Ensure unique combination of name and extension
         while (Domain::where('name', $name)->where('extension', $extension)->exists()) {
             $name = $this->faker->unique()->domainWord;
+            $extension = $this->faker->randomElement(array_keys(top_level_domains()));
         }
 
         return [
-            'user_id' => User::factory(),
             'name' => $name,
             'extension' => $extension,
             'price' => $this->faker->numberBetween(10000, 1000000),
