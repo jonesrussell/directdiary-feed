@@ -1,7 +1,7 @@
 <script setup>
 import DiaryLayout from '@/Layouts/DiaryLayout.vue';
-import UpdateLandingPageForm from './Partials/UpdateLandingPageForm.vue';
-import DeleteLandingPageForm from './Partials/DeleteLandingPageForm.vue';
+import UpdateDomainForm from './Partials/UpdateDomainForm.vue';
+import DeleteDomainForm from './Partials/DeleteDomainForm.vue';
 import { Head } from '@inertiajs/vue3';
 
 defineProps({
