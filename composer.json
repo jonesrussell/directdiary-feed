@@ -20,9 +20,12 @@
         "laravel/scout": "^10.0",
         "laravel/telescope": "^5.0",
         "laravel/tinker": "^2.8",
+        "mailgun/mailgun-php": "^4.3",
         "meilisearch/meilisearch-php": "^1.2",
         "musonza/chat": "^6.2",
+        "nyholm/psr7": "^1.8",
         "spatie/laravel-medialibrary": "^11.0",
+        "symfony/http-client": "^7.1",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
