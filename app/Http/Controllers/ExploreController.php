@@ -15,8 +15,12 @@ class ExploreController extends Controller
      */
     public function index()
     {
+        $posts = Post::with('user')
+            ->orderBy('created_at', 'desc')
+            ->paginate(15);
+
         return Inertia::render('Explore', [
-            'posts' => PostResource::collection(Post::orderBy('created_at', 'desc')->get()),
+            'posts' => PostResource::collection($posts),
         ]);
     }
 }
