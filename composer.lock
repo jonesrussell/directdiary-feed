@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "arubacao/tld-checker",
-            "version": "1.2.254",
+            "version": "1.2.255",
             "source": {
                 "type": "git",
                 "url": "https://github.com/arubacao/tld-checker.git",
-                "reference": "e82d463aace0b328914abc1767c0b0f16e79a237"
+                "reference": "1e079743267e868d54c69f3be6f495e906238e83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/arubacao/tld-checker/zipball/e82d463aace0b328914abc1767c0b0f16e79a237",
-                "reference": "e82d463aace0b328914abc1767c0b0f16e79a237",
+                "url": "https://api.github.com/repos/arubacao/tld-checker/zipball/1e079743267e868d54c69f3be6f495e906238e83",
+                "reference": "1e079743267e868d54c69f3be6f495e906238e83",
                 "shasum": ""
             },
             "require": {
@@ -65,9 +65,9 @@
             ],
             "support": {
                 "issues": "https://github.com/arubacao/tld-checker/issues",
-                "source": "https://github.com/arubacao/tld-checker/tree/1.2.254"
+                "source": "https://github.com/arubacao/tld-checker/tree/1.2.255"
             },
-            "time": "2024-10-13T04:01:16+00:00"
+            "time": "2024-10-20T04:01:18+00:00"
         },
         {
             "name": "brick/math",
