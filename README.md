@@ -1,56 +1,145 @@
-# Direct Diary
-## App Setup
+# DirectDiary Feed
 
-```
-git clone https://github.com/John-Weeks-Dev/twitter-clone.git
+DirectDiary Feed is the content engine powering DirectDiary, an innovative entrepreneur hub and networking platform. It's built using Laravel, Inertia.js, and Vue 3, providing a robust foundation for delivering dynamic, engaging content to keep entrepreneurs connected and informed.
 
-composer install 
+## Repository
 
-cp .env.example .env 
+https://github.com/jonesrussell/directdiary-feed
 
-php artisan cache:clear 
+## About DirectDiary
 
-composer dump-autoload 
+DirectDiary is revolutionizing the way entrepreneurs connect, learn, and do business. Unlike traditional platforms that take a cut of transactions, DirectDiary empowers users to make direct deals without commissions, while providing a rich ecosystem of tools and resources for growth.
 
-php artisan key:generate
+### Key Features
 
-composer require laravel/breeze --dev
+- **Commission-Free Direct Deals**: Facilitate business transactions without intermediary fees.
+- **Daily Entrepreneurial Content**: Curated and original content to help users grow their businesses and skills.
+- **Networking Tools**: Connect with like-minded entrepreneurs and potential business partners.
+- **Resource Hub**: Access to tools, guides, and resources for business growth.
+- **Engagement-Focused Platform**: Designed to keep users engaged and returning daily, increasing platform value.
 
-php artisan breeze:install vue --ssr
+## DirectDiary Feed Features
 
-php artisan serve
-```
+- User authentication and management (using Laravel Sanctum)
+- Content management system for daily entrepreneurial insights
+- Domain management for user profiles
+- API for seamless integration with the main DirectDiary platform
+- Single-page application (SPA) experience with Inertia.js and Vue 3
 
-Create the DB
-```
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=twitter-clone
-DB_USERNAME=root
-DB_PASSWORD=
-```
-Now migrate your DB
-```
-php artisan migrate
+## TODO
 
-php artisan db:seed
-```
+- Consider implementing a robust domain parsing solution:
+  - Evaluate the PHP Domain Parser library for accurate TLD and ccTLD handling.
+  - Update the `DomainRepository::create()` method to use the chosen parsing library.
+  - Note: This will add a new dependency to the project.
+  - Example implementation:
 
-Now run this command to start the project 
-```
-npm i
+    ```php
+    use Pdp\Rules;
+    use Pdp\Domain;
 
-npm run dev
-```
+    class DomainRepository
+    {
+        // ... existing code ...
 
-You should be good to go!
+        public function create(array $data): Domain
+        {
+            $fullDomain = $data['name'];
+            
+            $rules = Rules::fromPath('/path/to/public_suffix_list.dat');
+            $domain = Domain::fromIDNA2008($fullDomain);
+            $result = $rules->resolve($domain);
 
-# Application Images
-![Screenshot 2023-01-26 at 16 45 28](https://user-images.githubusercontent.com/108229029/214846914-799dd1dd-a063-4a39-b41f-0c18d1ff365c.png)
-![Screenshot 2023-01-26 at 16 45 53](https://user-images.githubusercontent.com/108229029/214846904-a4e3cbfe-dd24-451c-b0ba-79f6068283e3.png)
-![Screenshot 2023-01-26 at 16 46 08](https://user-images.githubusercontent.com/108229029/214846901-27368967-7f5a-4acf-91c9-8d4dad756fae.png)
-![Screenshot 2023-01-26 at 16 47 03](https://user-images.githubusercontent.com/108229029/214846892-3bed7033-c600-4161-87c9-ee18fe06e6c3.png)
-![Screenshot 2023-01-26 at 16 47 24](https://user-images.githubusercontent.com/108229029/214846886-e401fbda-746a-4a6d-9e56-a2e75ab54873.png)
-![Screenshot 2023-01-26 at 16 47 38](https://user-images.githubusercontent.com/108229029/214846882-c3ed31ad-6898-4ac7-96a7-2ff2daa35ae7.png)
-![Screenshot 2023-01-26 at 16 47 51](https://user-images.githubusercontent.com/108229029/214846876-bfeb7762-c316-404b-b832-ceb967b97005.png)
+            $data['name'] = $result->registrableDomain()->toString();
+            $data['extension'] = $result->suffix()->toString();
+
+            return Domain::create($data);
+        }
+
+        // ... existing code ...
+    }
+    ```
+
+## Technologies
+
+- PHP 8.3+
+- Laravel 11+
+- Inertia.js
+- Vue 3
+- Laravel Sanctum for API authentication
+- Composer for PHP dependency management
+- npm for JavaScript dependency management
+
+## Installation
+
+1. Clone the repository:
+   ```
+   git clone https://github.com/jonesrussell/directdiary-feed.git
+   cd directdiary-feed
+   ```
+
+2. Install PHP dependencies:
+   ```
+   composer install
+   ```
+
+3. Install JavaScript dependencies:
+   ```
+   npm install
+   ```
+
+4. Copy the `.env.example` file to `.env` and configure your environment variables, especially the database connection.
+
+5. Generate an application key:
+   ```
+   php artisan key:generate
+   ```
+
+6. Run database migrations:
+   ```
+   php artisan migrate
+   ```
+
+7. (Optional) Seed the database with sample data:
+   ```
+   php artisan db:seed
+   ```
+
+8. Compile assets:
+   ```
+   npm run dev
+   ```
+
+9. Start the development server:
+   ```
+   php artisan serve
+   ```
+
+## Usage
+
+After setting up the project, you can:
+
+1. Register a new user account
+2. Log in to the application
+3. Manage content through the admin interface
+4. Access content via API endpoints for integration with the main DirectDiary platform
+
+## API Endpoints
+
+(Note: Add specific API endpoints here once they are defined)
+
+## Contributing
+
+We welcome contributions that help make DirectDiary Feed even better for entrepreneurs. Please feel free to submit a Pull Request or open an Issue for discussion.
+
+## License
+
+DirectDiary Feed is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Support
+
+For support, please open an issue in the GitHub repository or contact our support team at (add support email or link).
+
+---
+
+DirectDiary: Empowering entrepreneurs with knowledge, connections, and tools for success – every single day.
