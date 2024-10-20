@@ -23,7 +23,7 @@ use Inertia\Inertia;
 |
 */
 Route::get('/', function () {
-    if (auth()->check) {
+    if (auth()->check()) {
         return redirect('/home');
     }
     return Inertia::render('Welcome');
