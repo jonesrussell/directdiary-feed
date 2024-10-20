@@ -7,6 +7,7 @@ use App\Http\Controllers\ExploreController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfilePictureController;
 use App\Http\Controllers\PublicProfileController;
+use App\Http\Controllers\LandingPageController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -52,6 +53,15 @@ Route::middleware('auth')->group(function () {
     Route::post('msg/{conversationId}', [ConversationMessageController::class, 'store'])->name('messages.store');
     Route::delete('msg/{conversationId}', [ConversationMessageController::class, 'deleteAll'])->name('messages.deleteAll');
     Route::delete('msg/{conversationId}/{messageId}', [ConversationMessageController::class, 'destroy'])->name('messages.destroy');
+
+    // Landing Page routes
+    Route::get('/landing-pages', [LandingPageController::class, 'index'])->name('landing-pages.index');
+    Route::get('/landing-pages/create', [LandingPageController::class, 'create'])->name('landing-pages.create');
+    Route::post('/landing-pages', [LandingPageController::class, 'store'])->name('landing-pages.store');
+    Route::get('/landing-pages/{landingPage}', [LandingPageController::class, 'show'])->name('landing-pages.show');
+    Route::get('/landing-pages/{landingPage}/edit', [LandingPageController::class, 'edit'])->name('landing-pages.edit');
+    Route::put('/landing-pages/{landingPage}', [LandingPageController::class, 'update'])->name('landing-pages.update');
+    Route::delete('/landing-pages/{landingPage}', [LandingPageController::class, 'destroy'])->name('landing-pages.destroy');
 });
 
 require __DIR__ . '/auth.php';
