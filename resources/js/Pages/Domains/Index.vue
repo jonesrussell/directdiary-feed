@@ -5,20 +5,48 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
+import { ref } from 'vue';
 
-defineProps({
-    domains: Array,
+const props = defineProps({
+    domains: {
+        type: Array,
+        required: true
+    },
+    userId: {
+        type: Number,
+        required: true
+    },
 });
 
 const form = useForm({
     name: '',
+    user_id: props.userId,
 });
+
+const errorMessage = ref('');
+const successMessage = ref('');
 
 const submit = () => {
     form.post(route('domains.store'), {
         preserveScroll: true,
-        onSuccess: () => form.reset('name'),
+        onSuccess: () => {
+            form.reset('name');
+            successMessage.value = 'Domain added successfully';
+            setTimeout(() => successMessage.value = '', 3000);
+        },
+        onError: (errors) => {
+            errorMessage.value = Object.values(errors).join(', ');
+            setTimeout(() => errorMessage.value = '', 5000);
+        },
     });
+};
+
+const deleteDomain = (domainId) => {
+    if (confirm('Are you sure you want to delete this domain?')) {
+        form.delete(route('domains.destroy', { domain: domainId }), {
+            preserveScroll: true,
+        });
+    }
 };
 </script>
 
@@ -34,6 +62,10 @@ const submit = () => {
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
+                        <!-- Success and Error Messages -->
+                        <div v-if="successMessage" class="mb-4 text-sm text-green-600">{{ successMessage }}</div>
+                        <div v-if="errorMessage" class="mb-4 text-sm text-red-600">{{ errorMessage }}</div>
+
                         <!-- Add Domain Form -->
                         <form @submit.prevent="submit" class="mb-6">
                             <div class="flex items-center">
@@ -85,14 +117,7 @@ const submit = () => {
                                         {{ new Date(domain.created_at).toLocaleDateString() }}
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <Link 
-                                            :href="route('domains.destroy', domain.id)" 
-                                            method="delete" 
-                                            as="button" 
-                                            class="text-red-600 hover:text-red-900"
-                                        >
-                                            Delete
-                                        </Link>
+                                        <button @click="deleteDomain(domain.id)">Delete</button>
                                     </td>
                                 </tr>
                             </tbody>
