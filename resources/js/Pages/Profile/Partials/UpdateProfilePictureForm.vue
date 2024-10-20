@@ -1,8 +1,10 @@
 <script setup>
+import { ref } from 'vue';
 import InputError from '@/Components/InputError.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { useForm, usePage } from '@inertiajs/vue3';
 
+const url = ref('');
 const user = usePage().props.auth.user;
 
 const form = useForm({

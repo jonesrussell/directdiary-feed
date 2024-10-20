@@ -8,6 +8,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfilePictureController;
 use App\Http\Controllers\PublicProfileController;
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\DomainController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -22,7 +23,7 @@ use Inertia\Inertia;
 |
 */
 Route::get('/', function () {
-    if (auth()->check()) {
+    if (auth()->check) {
         return redirect('/home');
     }
     return Inertia::render('Welcome');
@@ -55,13 +56,22 @@ Route::middleware('auth')->group(function () {
     Route::delete('msg/{conversationId}/{messageId}', [ConversationMessageController::class, 'destroy'])->name('messages.destroy');
 
     // Landing Page routes
-    Route::get('/landing-pages', [LandingPageController::class, 'index'])->name('landing-pages.index');
-    Route::get('/landing-pages/create', [LandingPageController::class, 'create'])->name('landing-pages.create');
-    Route::post('/landing-pages', [LandingPageController::class, 'store'])->name('landing-pages.store');
-    Route::get('/landing-pages/{landingPage}', [LandingPageController::class, 'show'])->name('landing-pages.show');
-    Route::get('/landing-pages/{landingPage}/edit', [LandingPageController::class, 'edit'])->name('landing-pages.edit');
-    Route::put('/landing-pages/{landingPage}', [LandingPageController::class, 'update'])->name('landing-pages.update');
-    Route::delete('/landing-pages/{landingPage}', [LandingPageController::class, 'destroy'])->name('landing-pages.destroy');
+    Route::get('landing-pages', [LandingPageController::class, 'index'])->name('landing-pages.index');
+    Route::get('landing-pages/create', [LandingPageController::class, 'create'])->name('landing-pages.create');
+    Route::post('landing-pages', [LandingPageController::class, 'store'])->name('landing-pages.store');
+    Route::get('landing-pages/{landingPage}', [LandingPageController::class, 'show'])->name('landing-pages.show');
+    Route::get('landing-pages/{landingPage}/edit', [LandingPageController::class, 'edit'])->name('landing-pages.edit');
+    Route::put('landing-pages/{landingPage}', [LandingPageController::class, 'update'])->name('landing-pages.update');
+    Route::delete('landing-pages/{landingPage}', [LandingPageController::class, 'destroy'])->name('landing-pages.destroy');
+
+    // Domain routes
+    Route::get('domains', [DomainController::class, 'index'])->name('domains.index');
+    Route::get('domains/create', [DomainController::class, 'create'])->name('domains.create');
+    Route::post('domains', [DomainController::class, 'store'])->name('domains.store');
+    Route::get('domains/{domain}', [DomainController::class, 'show'])->name('domains.show');
+    Route::get('domains/{domain}/edit', [DomainController::class, 'edit'])->name('domains.edit');
+    Route::put('domains/{domain}', [DomainController::class, 'update'])->name('domains.update');
+    Route::delete('domains/{domain}', [DomainController::class, 'destroy'])->name('domains.destroy');
 });
 
 require __DIR__ . '/auth.php';

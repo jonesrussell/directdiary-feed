@@ -43,6 +43,8 @@ class Domain extends Model
         'extension',
         'price',
         'user_id',
+        'visits',
+        'service_id',
     ];
 
     protected $guarded = [
@@ -55,7 +57,8 @@ class Domain extends Model
         'price' => 'integer',
         'user_id' => 'integer',
         'approval' => DomainApproval::class,
-        // 'status' => DomainStatus::class,
+        'visits' => 'integer',
+        'service_id' => 'integer',
     ];
 
     /**
@@ -64,6 +67,11 @@ class Domain extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function service(): BelongsTo
+    {
+        return $this->belongsTo(Service::class);
     }
 
     public function domainName(): string
@@ -97,11 +105,8 @@ class Domain extends Model
 
     public function scopeNewApproved($query): Builder
     {
-        return $query->where('approval', '=', DomainApproval::New->value)->orWhere(
-            'approval',
-            '=',
-            DomainApproval::Approved->value
-        );
+        return $query->where('approval', '=', DomainApproval::New->value)
+                     ->orWhere('approval', '=', DomainApproval::Approved->value);
     }
 
     public function toSearchableArray(): array
@@ -122,12 +127,7 @@ class Domain extends Model
         ];
     }
 
-    // public function priceRequests(): HasMany
-    // {
-    //     return $this->hasMany(PriceRequest::class);
-    // }
-
-    public function services()
+    public function services(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Service::class, 'domain_service_pivot');
     }

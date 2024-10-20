@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -15,22 +16,14 @@ use Musonza\Chat\Traits\Messageable;
 
 class User extends Authenticatable implements HasMedia
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
     use InteractsWithMedia;
     use Messageable;
 
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
     protected $appends = ['avatar', 'full_name'];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'firstname',
         'lastname',
@@ -44,54 +37,36 @@ class User extends Authenticatable implements HasMedia
         'linkedin_link',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'password' => 'hashed',
     ];
 
-    /**
-     * Get the user's full name.
-     */
     protected function fullName(): Attribute
     {
         return Attribute::make(
-            get: fn () => "{$this->firstname} {$this->lastname}",
+            get: fn (): string => "{$this->firstname} {$this->lastname}",
         );
     }
 
-    /**
-     * Return a user's avatar url.
-     */
     protected function avatar(): Attribute
     {
-        return new Attribute(
-            get: fn () => $this->getFirstMedia('avatar')?->getUrl()
+        return Attribute::make(
+            get: fn (): string => $this->getFirstMedia('avatar')?->getUrl()
                 ?? "https://ui-avatars.com/api/?name={$this->firstname}+{$this->lastname}",
         );
     }
 
-    public function domains()
+    public function domains(): HasMany
     {
         return $this->hasMany(Domain::class);
     }
 
-    /**
-     * Get the posts for the user.
-     */
     public function posts(): HasMany
     {
         return $this->hasMany(Post::class);
