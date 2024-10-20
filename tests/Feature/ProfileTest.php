@@ -2,14 +2,10 @@
 
 use App\Models\User;
 
-uses(\Illuminate\Foundation\Testing\RefreshDatabase::class);
-
 test('profile page is displayed', function () {
     $user = User::factory()->create();
 
-    $response = $this
-        ->actingAs($user)
-        ->get('/profile');
+    $response = $this->actingAs($user)->get('/profile');
 
     $response->assertOk();
 });
@@ -17,12 +13,13 @@ test('profile page is displayed', function () {
 test('profile information can be updated', function () {
     $user = User::factory()->create();
     $newUsername = 'testuser' . time();
+    $newEmail = 'test' . time() . '@example.com';
 
     $response = $this->actingAs($user)
         ->patch('/profile', [
             'firstname' => 'Test',
             'lastname' => 'User',
-            'email' => 'test' . time() . '@example.com',
+            'email' => $newEmail,
             'username' => $newUsername,
         ]);
 
@@ -34,15 +31,14 @@ test('profile information can be updated', function () {
 
     expect($user->firstname)->toBe('Test');
     expect($user->lastname)->toBe('User');
-    expect($user->email)->toBe('test' . time() . '@example.com');
-    expect($user->username)->toBe($newUsername, "Username was not updated. Expected: {$newUsername}, Actual: {$user->username}");
+    expect($user->email)->toBe($newEmail);
+    expect($user->username)->toBe($newUsername);
 });
 
 test('email verification status is unchanged when the email address is unchanged', function () {
     $user = User::factory()->create();
 
-    $response = $this
-        ->actingAs($user)
+    $response = $this->actingAs($user)
         ->patch('/profile', [
             'firstname' => $user->firstname,
             'lastname' => $user->lastname,
@@ -70,7 +66,7 @@ test('user can delete their account', function () {
         ->assertSessionHasNoErrors()
         ->assertRedirect('/');
 
-    $this->assertGuest();
+    expect(auth()->check())->toBeFalse();
     expect($user->fresh())->toBeNull();
 });
 
