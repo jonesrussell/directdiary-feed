@@ -7,8 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  laravel-tests:
-
+  ci:
     runs-on: ubuntu-latest
 
     services:
@@ -32,7 +31,7 @@ jobs:
         tools: composer:v2
 
     - name: Install Dependencies
-      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      run: composer install --no-interaction --prefer-dist --optimize-autoloader
 
     - name: Copy .env.testing
       run: php -r "file_exists('.env.testing') || copy('.env.testing.example', '.env.testing');"
@@ -62,4 +61,4 @@ jobs:
         DB_DATABASE: testing
         DB_USERNAME: root
         DB_PASSWORD: password
-      run: php artisan test --env=testing --bail
+      run: ./vendor/bin/pest --ci --bail
