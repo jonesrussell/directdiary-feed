@@ -17,13 +17,13 @@ it('renders login screen', function () {
 });
 
 it('allows users to authenticate using the login screen', function () {
-    $response = post('/login', [
+    $response = post(route('login'), [
         'email' => $this->user->email,
         'password' => 'password',
     ]);
 
     assertAuthenticated();
-    $response->assertRedirect('/home');
+    $response->assertRedirect(route('home'));
 });
 
 it('does not authenticate users with invalid password', function () {
