@@ -20,20 +20,20 @@ class DomainFactory extends Factory
      */
     public function definition(): array
     {
-        $name = $this->faker->unique()->domainWord;
-        $extension = $this->faker->randomElement(array_keys(top_level_domains()));
+        $name = fake()->unique()->domainWord;
+        $extension = fake()->randomElement(array_keys(top_level_domains()));
 
         // Ensure unique combination of name and extension
         while (Domain::where('name', $name)->where('extension', $extension)->exists()) {
-            $name = $this->faker->unique()->domainWord;
-            $extension = $this->faker->randomElement(array_keys(top_level_domains()));
+            $name = fake()->unique()->domainWord;
+            $extension = fake()->randomElement(array_keys(top_level_domains()));
         }
 
         return [
             'name' => $name,
             'extension' => $extension,
-            'price' => $this->faker->numberBetween(10000, 1000000),
-            'approval' => $this->faker->randomElement(DomainApproval::cases()),
+            'price' => fake()->numberBetween(10000, 1000000),
+            'approval' => fake()->randomElement(DomainApproval::cases()),
         ];
     }
 }

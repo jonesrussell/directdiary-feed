@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Musonza\Chat\Traits\Messageable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Musonza\Chat\Traits\Messageable;
 
 class User extends Authenticatable implements HasMedia
 {
@@ -47,17 +48,25 @@ class User extends Authenticatable implements HasMedia
         // 'password' => 'hashed',
     ];
 
+    /**
+     * Create a new factory instance for the model.
+     */
+    protected static function newFactory()
+    {
+        return UserFactory::new();
+    }
+
     protected function fullName(): Attribute
     {
         return Attribute::make(
-            get: fn (): string => "{$this->firstname} {$this->lastname}",
+            get: fn(): string => "{$this->firstname} {$this->lastname}",
         );
     }
 
     protected function avatar(): Attribute
     {
         return Attribute::make(
-            get: fn (): string => $this->getFirstMedia('avatar')?->getUrl()
+            get: fn(): string => $this->getFirstMedia('avatar')?->getUrl()
                 ?? "https://ui-avatars.com/api/?name={$this->firstname}+{$this->lastname}",
         );
     }

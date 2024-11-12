@@ -24,7 +24,7 @@
         "meilisearch/meilisearch-php": "^1.10.1",
         "musonza/chat": "^6.3.0",
         "nyholm/psr7": "^1.8.2",
-        "spatie/laravel-medialibrary": "^11.9.2",
+        "spatie/laravel-medialibrary": "^11.9",
         "symfony/http-client": "^7.1.5",
         "symfony/mailgun-mailer": "^7.1.3",
         "tightenco/ziggy": "^1.8.2"
