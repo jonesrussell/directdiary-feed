@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Carbon\Carbon;
@@ -11,6 +12,8 @@ use Carbon\Carbon;
  */
 class PostFactory extends Factory
 {
+    protected $model = Post::class;
+
     /**
      * Define the model's default state.
      *
@@ -20,7 +23,7 @@ class PostFactory extends Factory
     {
         return [
             'user_id' => User::factory(),
-            'post' => $this->faker->paragraph,
+            'post' => fake()->paragraph,
             'file' => '/videos/Sportsman.mp4',
             'is_video' => true,
             'created_at' => Carbon::now(),
@@ -30,7 +33,7 @@ class PostFactory extends Factory
 
     public function configure()
     {
-        return $this->afterCreating(function (\App\Models\Post $post) {
+        return $this->afterCreating(function (Post $post) {
             $post->addMediaFromUrl('https://picsum.photos/200/300')
                  ->toMediaCollection('image');
         });

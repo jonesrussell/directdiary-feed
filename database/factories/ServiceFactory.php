@@ -25,11 +25,11 @@ class ServiceFactory extends Factory
      */
     public function definition(): array
     {
-        $name = $this->faker->unique()->words(2, true);
+        $name = fake()->unique()->words(2, true);
         return [
             'key' => Str::slug($name),
             'name' => $name,
-            'description' => $this->faker->sentence(),
+            'description' => fake()->sentence(),
         ];
     }
 }
