@@ -115,10 +115,10 @@ class ConversationController extends Controller
     public function update(UpdateConversation $request, $id): void
     {
         /** @var Conversation $conversation */
-        // $conversation = Chat::conversations()->getById($id);
-        // $conversation->update(['data' => $request->validated()['data']]);
+        $conversation = Chat::conversations()->getById($id);
+        $conversation->update(['data' => $request->validated()['data']]);
 
-        // return $this->itemResponse($conversation);
+        return;
     }
 
     /**
@@ -127,23 +127,23 @@ class ConversationController extends Controller
      *
      * @return ResponseFactory|Response
      * @throws Exception
-     *
+     * @return Response|ResponseFactory
      */
-    public function destroy(DestroyConversation $request, $id): Response|ResponseFactory
+    public function destroy(DestroyConversation $request, $id): Response|ResponseFactory 
     {
         /** @var Conversation $conversation */
-        // $conversation = Chat::conversations()->getById($id);
+        $conversation = Chat::conversations()->getById($id);
+        
+        try {
+            $conversation->delete();
+        } catch (Exception $e) {
+            if ($e instanceof DeletingConversationWithParticipantsException) {
+                abort(HttpResponse::HTTP_FORBIDDEN, $e->getMessage());
+            }
 
-        // try {
-        //     $conversation->delete();
-        // } catch (Exception $e) {
-        //     if ($e instanceof DeletingConversationWithParticipantsException) {
-        //         abort(HttpResponse::HTTP_FORBIDDEN, $e->getMessage());
-        //     }
+            throw $e;
+        }
 
-        //     throw $e;
-        // }
-
-        // return response($conversation);
+        return response($conversation);
     }
 }

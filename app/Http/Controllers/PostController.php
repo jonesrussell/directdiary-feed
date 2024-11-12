@@ -47,9 +47,11 @@ class PostController extends Controller
             'file' => 'nullable|file|mimes:jpg,jpeg,png,mp4',
         ]);
 
-        $user = Auth::user();
         /* @var User $user */
-        $post = $user->posts()->create($validated);
+        $user = Auth::user();
+        $post = Post::create(array_merge($validated, [
+            'user_id' => $user->id
+        ]));
 
         if ($request->hasFile('file')) {
             $file = $request->file('file');
