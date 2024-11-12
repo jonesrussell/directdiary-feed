@@ -13,7 +13,15 @@ it('displays profile page', function () {
         ->assertOk();
 });
 
-it('allows profile information to be updated', function ($field, $value) {
+it('allows profile information to be updated', function (string $field, string $value) {
+    // Generate unique values for email and username
+    $value = match ($field) {
+        'email' => "new_" . time() . "@example.com",
+        'username' => "new_" . time() . "_user",
+        default => $value
+    };
+
+    // Include all current user data and override only the field being tested
     $data = array_merge(
         $this->user->only(['firstname', 'lastname', 'email', 'username']),
         [$field => $value]

@@ -45,31 +45,30 @@ it('does not authenticate users with invalid email', function () {
 });
 
 it('throttles login attempts', function () {
-    // Configure the throttle middleware for testing
+    // Clear any existing rate limiter data
     RateLimiter::clear('login');
-    
-    // Attempt to login multiple times to trigger throttle
-    $attempts = 6;
-    $responses = [];
 
-    for ($i = 0; $i < $attempts; $i++) {
-        $response = post('/login', [
+    // Attempt to login multiple times
+    foreach (range(1, 5) as $_) {
+        post('/login', [
             'email' => $this->user->email,
             'password' => 'wrong-password',
         ]);
-        
-        $responses[] = [
-            'attempt' => $i + 1,
-            'status' => $response->status(),
-        ];
     }
 
-    // Check if any of the attempts resulted in a 429 status
-    $throttled = collect($responses)->contains(function ($response) {
-        return $response['status'] === 429;
-    });
+    // The 6th attempt should be rate limited
+    $response = post('/login', [
+        'email' => $this->user->email,
+        'password' => 'wrong-password',
+    ]);
 
-    expect($throttled)->toBeTrue('No request was throttled (status 429)');
+    // Assert that we get redirected back with throttle error
+    $response->assertRedirect();
+    $response->assertSessionHasErrors('email');
+    
+    // Get the actual error message
+    $errors = session('errors')->get('email');
+    expect($errors[0])->toContain('Too many login attempts');
 });
 
 it('remembers user when requested', function () {
