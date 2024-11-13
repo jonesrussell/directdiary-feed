@@ -22,6 +22,11 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('dns_verify_token')->nullable();
+            $table->text('biography')->nullable();
+            $table->string('facebook_link')->nullable();
+            $table->string('twitter_link')->nullable();
+            $table->string('instagram_link')->nullable();
+            $table->string('linkedin_link')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
