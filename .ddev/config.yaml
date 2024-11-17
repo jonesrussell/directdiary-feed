@@ -6,8 +6,10 @@ webserver_type: nginx-fpm
 router_http_port: "80"
 router_https_port: "443"
 xdebug_enabled: false
-additional_hostnames: []
-additional_fqdns: []
+additional_hostnames:
+  - example
+  - test
+  - hello
 database:
     type: mariadb
     version: "10.11"
@@ -284,3 +286,4 @@ hooks:
 # information on the commands that can be extended and the tasks you can define
 # for them. Example:
 #hooks:
+

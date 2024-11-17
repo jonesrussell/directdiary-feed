@@ -74,5 +74,9 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
-Route::get('{username}', [PublicProfileController::class, 'show']);
+Route::middleware(['web', 'custom.domain'])->group(function () {
+    Route::get('/', [PublicProfileController::class, 'show']);
+    Route::get('{username}', [PublicProfileController::class, 'show']);
+});
+
 Route::get('{username}/domains', [PublicProfileController::class, 'domains']);
