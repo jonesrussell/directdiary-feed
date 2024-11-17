@@ -12,19 +12,19 @@ const features = ref([
 const successStories = ref([
   {
     name: "Jane Doe",
-    avatar: "/images/jane-doe.jpg",
+    avatar: "https://placehold.co/80x80/666666/FFFFFF/png?text=JD",
     testimonial: "Direct Diary helped me connect with the perfect business partner.",
     achievement: "Closed a $1M deal"
   },
   {
     name: "John Smith",
-    avatar: "/images/john-smith.jpg",
+    avatar: "https://placehold.co/80x80/666666/FFFFFF/png?text=JS",
     testimonial: "The daily content keeps me motivated and informed.",
     achievement: "Grew network by 500%"
   },
   {
     name: "Alice Johnson",
-    avatar: "/images/alice-johnson.jpg",
+    avatar: "https://placehold.co/80x80/666666/FFFFFF/png?text=AJ",
     testimonial: "I've learned more here than in my MBA program!",
     achievement: "Launched successful startup"
   }
@@ -53,7 +53,11 @@ const successStories = ref([
                             </p>
                         </div>
                         <div class="mt-10 lg:mt-0 lg:w-1/2">
-                            <img class="rounded-lg shadow-xl" src="/images/hero-image.jpg" alt="Entrepreneurs networking">
+                            <img 
+                                class="rounded-lg shadow-xl" 
+                                src="https://placehold.co/800x600/666666/FFFFFF/png?text=Entrepreneurs+Networking"
+                                alt="Entrepreneurs networking"
+                            >
                         </div>
                     </div>
                 </div>
