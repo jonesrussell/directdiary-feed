@@ -126,7 +126,30 @@ After setting up the project, you can:
 
 ## API Endpoints
 
-(Note: Add specific API endpoints here once they are defined)
+### Testing with cURL
+
+Test the custom domain middleware using these curl commands (replace `53448` with your current artisan serve port):
+
+```bash
+# Test main domain (headers only)
+curl -I -H "Host: directdiary-feed.ddev.site" http://127.0.0.1:53448
+
+# Test custom domains (headers only)
+curl -I -H "Host: example.ddev.site" http://127.0.0.1:53448
+curl -I -H "Host: test.ddev.site" http://127.0.0.1:53448
+curl -I -H "Host: hello.ddev.site" http://127.0.0.1:53448
+
+# Test invalid subdomain (headers only)
+curl -I -H "Host: nonexistent.ddev.site" http://127.0.0.1:53448
+
+# Test malformed domain (headers only)
+curl -I -H "Host: invalid" http://127.0.0.1:53448
+
+# Test specific route with custom domain (headers only)
+curl -I -H "Host: example.ddev.site" http://127.0.0.1:53448/profile
+```
+
+Note: The `-I` flag shows only the response headers and status code. When using `php artisan serve`, the port number may change between sessions.
 
 ## Contributing
 
