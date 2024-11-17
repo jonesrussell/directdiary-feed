@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { router, usePage, Link } from '@inertiajs/vue3';
 import Account from 'vue-material-design-icons/Account.vue';
 import ArrowLeft from 'vue-material-design-icons/ArrowLeft.vue';
@@ -71,14 +71,34 @@ const textareaInput = (e) => {
     textarea.value.style.height = `${e.target.scrollHeight}px`;
 };
 
-const menuItems = ref([
-  { name: 'Home', icon: Home, route: '/' },
-  { name: 'Explore', icon: Compass, route: '/explore' },
-  { name: 'Messages', icon: MessageText, route: '/messages' },
-  { name: 'Profile', icon: Account, route: '/profile' },
-  { name: 'Domains', icon: Domain, route: '/domains' },
-  { name: 'Landing Pages', icon: Web, route: '/landing-pages' },
-]);
+const debugMode = true;
+
+watch(() => user.value, (newValue) => {
+    if (debugMode) {
+        console.log('User state changed:', newValue);
+    }
+}, { immediate: true });
+
+const visibleMenuItems = computed(() => {
+    const items = menuItems.filter(item => 
+        user.value || ['Explore', 'Domains', 'Landing Pages'].includes(item.name)
+    );
+    
+    if (debugMode) {
+        console.log('Visible menu items:', items);
+    }
+    
+    return items;
+});
+
+const menuItems = [
+    { id: 1, name: 'Home', icon: Home, route: '/' },
+    { id: 2, name: 'Explore', icon: Compass, route: '/explore' },
+    { id: 3, name: 'Messages', icon: MessageText, route: '/messages' },
+    { id: 4, name: 'Profile', icon: Account, route: '/profile' },
+    { id: 5, name: 'Domains', icon: Domain, route: '/domains' },
+    { id: 6, name: 'Landing Pages', icon: Web, route: '/landing-pages' },
+];
 </script>
 
 <template>
@@ -89,8 +109,16 @@ const menuItems = ref([
                     <img class="rounded-full mt-3 w-full" width="50" src="/img/leo-logo.png" />
                 </div>
 
-                <Link v-for="item in menuItems" :key="item.name" :href="item.route" v-if="user || ['Explore', 'Domains', 'Landing Pages'].includes(item.name)">
-                    <MenuItem :iconString="item.name" :icon="item.icon" />
+                <Link 
+                    v-for="menuItem in visibleMenuItems" 
+                    :key="menuItem.id" 
+                    :href="menuItem.route"
+                >
+                    <MenuItem 
+                        :iconString="menuItem.name" 
+                        :icon="menuItem.icon" 
+                        @click="debugMode && console.log('Clicked:', menuItem.name)"
+                    />
                 </Link>
 
                 <button v-if="user" @click="createPost = true"
@@ -197,5 +225,10 @@ const menuItems = ref([
                 </div>
             </div>
         </div>
+    </div>
+
+    <div v-if="debugMode" class="fixed bottom-0 right-0 bg-black bg-opacity-75 text-white p-4 m-4 rounded-lg z-50">
+        <div>User authenticated: {{ !!user }}</div>
+        <div>Visible menu items: {{ visibleMenuItems.length }}</div>
     </div>
 </template>
