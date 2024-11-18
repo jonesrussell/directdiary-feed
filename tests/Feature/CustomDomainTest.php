@@ -5,8 +5,10 @@ use App\Models\Domain;
 use App\Enums\DomainApproval;
 
 beforeEach(function () {
+    config(['scout.driver' => null]);
+    
     $this->user = User::factory()->create([
-        'username' => 'testuser',
+        'username' => 'testuser_' . uniqid(),
     ]);
 
     $this->domain = Domain::factory()->create([
@@ -50,13 +52,13 @@ test('non-existent domain returns 404', function () {
 test('main app domain shows normal profile page', function () {
     config(['app.url' => 'foo.com']);
 
-    $this->get('/testuser')
+    $this->get('/' . $this->user->username)
         ->withHost('foo.com')
         ->assertOk()
         ->assertInertia(fn ($page) => $page
             ->component('PublicProfile')
             ->has('profile', fn ($profile) => $profile
-                ->where('username', 'testuser')
+                ->where('username', $this->user->username)
                 ->etc()
             )
             ->where('view', 'posts')
