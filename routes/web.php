@@ -59,7 +59,7 @@ Route::domain(config('app.url'))->middleware('web')->group(function () {
             });
 
             // Conversations Routes
-            Route::resource('messages', ConversationController::class)->names('conversations');
+            Route::resource('messages', ConversationController::class)->names('app.conversations');
 
             Route::prefix('msg/{conversationId}')->name('messages.')->group(function () {
                 Route::get('/', [ConversationMessageController::class, 'index'])->name('index');
