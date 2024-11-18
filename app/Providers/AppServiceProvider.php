@@ -25,8 +25,5 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Blade::directive('viteAssets', function () {
-            return "<?php echo app('App\\Services\\ViteAssetService')->render(); ?>";
-        });
     }
 }
