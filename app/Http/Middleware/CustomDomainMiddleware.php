@@ -20,7 +20,7 @@ class CustomDomainMiddleware
             $extension = implode('.', array_slice($parts, -2)); // Gets last two parts (e.g., "com", "co.uk")
             $name = implode('.', array_slice($parts, 0, -2)); // Gets everything before the extension
             
-            Log::debug('CustomDomainMiddleware: Processing request', [
+            Log::info('CustomDomainMiddleware: Processing request', [
                 'host' => $host,
                 'name' => $name,
                 'extension' => $extension
@@ -34,7 +34,7 @@ class CustomDomainMiddleware
                 ->first();
 
             if (!$domain || !$domain->user) {
-                Log::warning('CustomDomainMiddleware: Domain not found or no user', [
+                Log::info('CustomDomainMiddleware: Domain not found or no user', [
                     'host' => $host,
                     'name' => $name,
                     'extension' => $extension,
@@ -44,7 +44,7 @@ class CustomDomainMiddleware
                 abort(404);
             }
 
-            Log::debug('CustomDomainMiddleware: Domain found', [
+            Log::info('CustomDomainMiddleware: Domain found', [
                 'domain_id' => $domain->id,
                 'username' => $domain->user->username
             ]);
