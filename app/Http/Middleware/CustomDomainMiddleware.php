@@ -15,10 +15,31 @@ class CustomDomainMiddleware
             // Get the full host from the request
             $host = $request->getHost();
             
+            Log::info('CustomDomainMiddleware: Processing request', [
+                'host' => $host,
+                'scheme' => $request->getScheme(),
+                'url' => $request->url()
+            ]);
+            
             // Parse domain components
             $parts = explode('.', $host);
+            
+            // Ensure we have enough parts
+            if (count($parts) < 2) {
+                Log::warning('CustomDomainMiddleware: Invalid domain format', [
+                    'host' => $host,
+                    'parts' => $parts
+                ]);
+                abort(404);
+            }
+            
             $extension = implode('.', array_slice($parts, -2));
             $name = implode('.', array_slice($parts, 0, -2));
+            
+            Log::debug('CustomDomainMiddleware: Parsed domain', [
+                'name' => $name,
+                'extension' => $extension
+            ]);
             
             // Find the domain in our database
             $domain = Domain::with('user')
@@ -28,12 +49,25 @@ class CustomDomainMiddleware
                 ->first();
 
             if (!$domain || !$domain->user) {
+                Log::info('CustomDomainMiddleware: Domain not found or no user', [
+                    'host' => $host,
+                    'name' => $name,
+                    'extension' => $extension,
+                    'domain_found' => (bool)$domain,
+                    'has_user' => (bool)$domain?->user
+                ]);
                 abort(404);
             }
 
+            Log::info('CustomDomainMiddleware: Domain found', [
+                'domain_id' => $domain->id,
+                'username' => $domain->user->username
+            ]);
+
             // Set the asset URL for the current domain
-            config(['app.url' => $request->getScheme() . '://' . $host]);
-            config(['asset_url' => $request->getScheme() . '://' . $host]);
+            $baseUrl = $request->getScheme() . '://' . $host;
+            config(['app.url' => $baseUrl]);
+            config(['asset_url' => $baseUrl]);
             
             // Set the username parameter
             $request->route()->setParameter('username', $domain->user->username);
@@ -42,7 +76,10 @@ class CustomDomainMiddleware
         } catch (\Exception $e) {
             Log::error('CustomDomainMiddleware: Error', [
                 'message' => $e->getMessage(),
-                'host' => $host ?? null
+                'host' => $host ?? null,
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString()
             ]);
             abort(404);
         }
