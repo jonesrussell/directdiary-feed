@@ -11,45 +11,33 @@ class CustomDomainMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        $host = $request->getHost();
-        $mainDomain = str_replace(['https://', 'http://'], '', config('app.url'));
-        
-        Log::debug('CustomDomainMiddleware: Starting middleware execution', [
-            'host' => $host,
-            'main_domain' => $mainDomain,
-            'route_name' => $request->route()?->getName(),
-            'all_parameters' => $request->route()?->parameters() ?? []
-        ]);
-        
-        // Skip middleware for main application domain
-        if ($host === $mainDomain) {
-            Log::debug('CustomDomainMiddleware: Main domain detected, skipping middleware', [
-                'host' => $host,
-                'main_domain' => $mainDomain
-            ]);
-            return $next($request);
-        }
-        
         try {
-            // Parse domain components
-            $name = explode('.', $host)[0];
-            $extension = implode('.', array_slice(explode('.', $host), 1));
+            // Get the full host from the request
+            $host = $request->getHost();
             
-            Log::debug('CustomDomainMiddleware: Looking up domain', [
+            // Parse domain components
+            $parts = explode('.', $host);
+            $extension = implode('.', array_slice($parts, -2)); // Gets last two parts (e.g., "com", "co.uk")
+            $name = implode('.', array_slice($parts, 0, -2)); // Gets everything before the extension
+            
+            Log::debug('CustomDomainMiddleware: Processing request', [
+                'host' => $host,
                 'name' => $name,
                 'extension' => $extension
             ]);
-            
-            // Query for domain
-            $domain = Domain::approved()
+
+            // Find the domain in our database
+            $domain = Domain::with('user')
                 ->where('name', $name)
                 ->where('extension', $extension)
-                ->with('user')
+                ->approved()
                 ->first();
 
             if (!$domain || !$domain->user) {
                 Log::warning('CustomDomainMiddleware: Domain not found or no user', [
-                    'subdomain' => $name,
+                    'host' => $host,
+                    'name' => $name,
+                    'extension' => $extension,
                     'domain_found' => (bool)$domain,
                     'has_user' => (bool)$domain?->user
                 ]);
@@ -69,7 +57,7 @@ class CustomDomainMiddleware
         } catch (\Exception $e) {
             Log::error('CustomDomainMiddleware: Error', [
                 'message' => $e->getMessage(),
-                'subdomain' => $name ?? null
+                'host' => $host ?? null
             ]);
             abort(404);
         }

@@ -106,14 +106,13 @@ Route::domain(config('app.url'))->middleware('web')->group(function () {
 });
 
 // 2. Custom Domain Routes
-Route::group(['domain' => '{subdomain}.ddev.site', 'middleware' => ['web', 'custom.domain']], function () {
+Route::group(['middleware' => ['web', 'custom.domain']], function () {
     Route::get('/', function() {
         $username = request()->route('username');
         
         Log::debug('Custom domain root route', [
             'username' => $username,
-            'host' => request()->getHost(),
-            'subdomain' => request()->route('subdomain')
+            'host' => request()->getHost()
         ]);
         
         if (!$username) {
