@@ -6,6 +6,7 @@ use App\Models\Domain;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Enums\DomainApproval;
 
 class CustomDomainMiddleware
 {
@@ -55,7 +56,7 @@ class CustomDomainMiddleware
             $domain = Domain::with('user')
                 ->where('name', $name)
                 ->where('extension', $extension)
-                ->approved()
+                ->where('approval', DomainApproval::Approved)
                 ->first();
 
             if (!$domain || !$domain->user) {
