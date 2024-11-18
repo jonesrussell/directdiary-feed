@@ -7,6 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Enums\DomainApproval;
+use Illuminate\Support\Facades\Vite;
 
 class CustomDomainMiddleware
 {
@@ -79,6 +80,9 @@ class CustomDomainMiddleware
             $baseUrl = $request->getScheme() . '://' . $host;
             config(['app.url' => $baseUrl]);
             config(['asset_url' => $baseUrl]);
+            Vite::useHotFile(public_path('hot'))
+                ->useBuildDirectory('build')
+                ->useAssetUrl($baseUrl);
             
             // Set the username parameter
             $request->route()->setParameter('username', $domain->user->username);

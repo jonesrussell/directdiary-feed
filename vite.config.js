@@ -31,4 +31,6 @@ export default defineConfig({
             clientPort: 5173
         }
     },
+    // Add base URL configuration
+    base: process.env.ASSET_URL || '/',
 });
