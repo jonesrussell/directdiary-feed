@@ -1,16 +1,16 @@
 <script setup>
 import { ref, computed, watch } from 'vue';
 import { router, usePage, Link } from '@inertiajs/vue3';
-import Account from 'vue-material-design-icons/Account.vue';
+import MenuItem from '@/Components/MenuItem.vue';
 import ArrowLeft from 'vue-material-design-icons/ArrowLeft.vue';
 import Close from 'vue-material-design-icons/Close.vue';
-import Compass from 'vue-material-design-icons/Compass.vue';
-import Domain from 'vue-material-design-icons/Domain.vue';
 import Earth from 'vue-material-design-icons/Earth.vue';
 import Feather from 'vue-material-design-icons/Feather.vue';
 import Home from 'vue-material-design-icons/Home.vue';
-import MenuItem from '@/Components/MenuItem.vue';
+import Compass from 'vue-material-design-icons/Compass.vue';
 import MessageText from 'vue-material-design-icons/MessageText.vue';
+import AccountOutline from 'vue-material-design-icons/AccountOutline.vue';
+import Domain from 'vue-material-design-icons/Domain.vue';
 import Web from 'vue-material-design-icons/Web.vue';
 
 const props = defineProps({
@@ -95,7 +95,7 @@ const menuItems = [
     { id: 1, name: 'Home', icon: Home, route: '/' },
     { id: 2, name: 'Explore', icon: Compass, route: '/explore' },
     { id: 3, name: 'Messages', icon: MessageText, route: '/messages' },
-    { id: 4, name: 'Profile', icon: Account, route: '/profile' },
+    { id: 4, name: 'Profile', icon: AccountOutline, route: '/profile' },
     { id: 5, name: 'Domains', icon: Domain, route: '/domains' },
     { id: 6, name: 'Landing Pages', icon: Web, route: '/landing-pages' },
 ];
