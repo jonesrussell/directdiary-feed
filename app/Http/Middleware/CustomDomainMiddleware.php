@@ -33,12 +33,22 @@ class CustomDomainMiddleware
                 abort(404);
             }
             
-            $extension = implode('.', array_slice($parts, -2));
-            $name = implode('.', array_slice($parts, 0, -2));
+            // Handle domain parsing based on number of parts
+            if (count($parts) === 2) {
+                // For domains like "example.com"
+                $name = $parts[0];
+                $extension = $parts[1];
+            } else {
+                // For domains like "subdomain.example.com"
+                $extension = implode('.', array_slice($parts, -2));
+                $name = implode('.', array_slice($parts, 0, -2));
+            }
             
             Log::debug('CustomDomainMiddleware: Parsed domain', [
                 'name' => $name,
-                'extension' => $extension
+                'extension' => $extension,
+                'parts' => $parts,
+                'parts_count' => count($parts)
             ]);
             
             // Find the domain in our database
