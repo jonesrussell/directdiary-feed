@@ -6,6 +6,9 @@
 
         <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
+        <!-- Add this meta tag for asset URL -->
+        <meta name="asset-url" content="{{ asset('') }}">
+
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
 

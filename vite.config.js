@@ -8,6 +8,9 @@ export default defineConfig({
             input: 'resources/js/app.js',
             ssr: 'resources/js/ssr.js',
             refresh: true,
+            publicDirectory: 'public',
+            buildDirectory: 'build',
+            base: process.env.ASSET_URL || '/',
         }),
         vue({
             template: {
